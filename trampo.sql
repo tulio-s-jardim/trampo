@@ -11,6 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema trampo
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `trampo`;
 CREATE SCHEMA IF NOT EXISTS `trampo` DEFAULT CHARACTER SET utf8 ;
 USE `trampo` ;
 
@@ -117,42 +118,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trampo`.`recomendacao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampo`.`recomendacao` (
-  `id_remetente` INT(10) UNSIGNED NOT NULL,
-  `id_destinatario` INT(10) UNSIGNED NOT NULL,
-  `nota` INT(10) UNSIGNED NOT NULL,
-  `tipo` TINYINT(3) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id_remetente`, `id_destinatario`),
-  INDEX `fk_conta_has_conta_conta1_idx` (`id_destinatario` ASC),
-  INDEX `fk_conta_has_conta_conta_idx` (`id_remetente` ASC),
-  CONSTRAINT `fk_conta_has_conta_conta`
-    FOREIGN KEY (`id_remetente`)
-    REFERENCES `trampo`.`conta` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_conta_has_conta_conta1`
-    FOREIGN KEY (`id_destinatario`)
-    REFERENCES `trampo`.`conta` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `trampo`.`regiao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampo`.`regiao` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `trampo`.`respostas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trampo`.`respostas` (
@@ -175,10 +140,39 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
+-- -----------------------------------------------------
+-- Table `trampo`.`recomendacao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trampo`.`recomendacao` (
+  `publicacao_id` INT(10) UNSIGNED NOT NULL,
+  `conta_id` INT(10) UNSIGNED NOT NULL,
+  `nota` INT(10) UNSIGNED NOT NULL,
+  `tipo` TINYINT(3) UNSIGNED NOT NULL,
+  INDEX `fk_recomendacao_respostas1_idx` (`conta_id` ASC, `publicacao_id` ASC),
+  PRIMARY KEY (`publicacao_id`),
+  CONSTRAINT `fk_recomendacao_respostas1`
+    FOREIGN KEY (`conta_id` , `publicacao_id`)
+    REFERENCES `trampo`.`respostas` (`conta_id` , `publicacao_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `trampo`.`regiao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trampo`.`regiao` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 
 Insert into Regiao (id, nome) values (1, 'Norte');
 Insert into Regiao (id, nome) values (2, 'Nordeste');
