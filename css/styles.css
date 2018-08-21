@@ -88,7 +88,8 @@ input.form-control {
   text-transform: uppercase;
   font-weight: 500;
   height: 60px;
-  padding-top: 18px; }
+  padding-top: 10px;
+  padding-left: 20px; }
 
 .navbar-header .navbar-brand span {
   color: #30a5ff; }
@@ -311,7 +312,8 @@ a.label:hover, a.label:focus {
   background-color: #8ad919; }
 
 .label-info {
-  background-color: #30a5ff; }
+  background-color: #fff;
+  color: #000; }
 
 .label-info[href]:hover, .label-info[href]:focus {
   background-color: #30a5ff; }
