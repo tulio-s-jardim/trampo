@@ -52,12 +52,6 @@ CREATE TABLE IF NOT EXISTS `trampo`.`conta` (
   `bairro_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  INDEX `fk_conta_bairro1_idx` (`bairro_id` ASC),
-  CONSTRAINT `fk_conta_bairro1`
-    FOREIGN KEY (`bairro_id`)
-    REFERENCES `trampo`.`bairro` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

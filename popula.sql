@@ -1,5 +1,5 @@
-INSERT INTO Categoria ()
-Jardinagem Elétrica Hidráulica Pintura Alvenaria Mecânica Transporte Buffet Babá Faxina
+INSERT INTO Categoria (nome) VALUES ('Jardinagem'), ('Elétrica'), ('Hidráulica'), ('Pintura'), ('Alvenaria'), ('Mecânica'),
+('Transporte'), ('Buffet'), ('Babá'), ('Faxina');
 Insert into Regiao (id, nome) values (1, 'Norte');
 Insert into Regiao (id, nome) values (2, 'Nordeste');
 Insert into Regiao (id, nome) values (3, 'Sudeste');
