@@ -67,7 +67,6 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li><a href="index.php"><em class="fa fa-th-list">&nbsp;</em> Início</a></li>
 			<li><a href="criaPublicacao.php"><em class="fa fa-file-signature">&nbsp;</em> Criar Publicação</a></li>
 			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Serviços Oferecidos<span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
@@ -98,6 +97,6 @@
 					</a></li>
 				</ul>
 			</li>
-			<li><a href="login.html"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li><a href="login.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
