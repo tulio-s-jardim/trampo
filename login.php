@@ -31,7 +31,7 @@
 									<input name="remember" type="checkbox" value="Remember Me">Remember Me
 								</label>
 							</div>
-							<a href="index.php" class="btn btn-primary">Login</a>
+							<a href="criaPublicacao.php" class="btn btn-primary">Login</a>
 							<a href="formularioCadastra.php" class="btn btn-primary cadastra">Cadastrar</a></fieldset>
 					</form>
 				</div>
