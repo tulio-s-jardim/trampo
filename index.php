@@ -16,26 +16,6 @@ include_once('header.php');
 				<h1 class="page-header">Início</h1>
 			</div>
 		</div><!--/.row-->
-		
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<form action="login.php">
-					<button onclick="window.location.href='login.php'" type="button" class="btn btn-md btn-primary botao-login">Fazer login</button>
-				</form>
-			</div>
-			<div class="panel-heading">Cadastrar</div>
-			<div class="panel-body">
-				<div class="col-md-6">
-					<form role="form">
-						<div class="form-group">
-							<label>E-mail</label>
-							<input class="form-control">
-						</div>
-						<div class="form-group">
-							<label>Senha</label>
-							<input type="password" class="form-control">
-						</div>
-		</div><!-- /.panel-->
 
 		<div class="row">
 			<div class="col-md-12">

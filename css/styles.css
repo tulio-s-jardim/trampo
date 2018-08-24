@@ -1036,3 +1036,22 @@ p.back-link {
 
 .main {
   background-color: #e5e5e5; }
+
+select.form-control {
+  border: 1px solid #ddd;
+  box-shadow: none;
+  height: 46px;
+}
+
+.pnl-sem-titulo {
+  margin-top: 15px;
+}
+
+.sucesso {
+  background-color: #b9db87;
+  border-radius: 5px;
+}
+
+.cadastra {
+  margin-left: 5px;
+}

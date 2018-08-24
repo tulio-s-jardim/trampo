@@ -115,7 +115,7 @@ class Conta {
     }
 
     public function viewRecomendacoesPrestador() {
-        $query = "SELECT AVG(nota) FROM `recomendacoes` WHERE `conta_id` = :id AND `tipo` = 0 ;";
+        $query = "SELECT AVG(nota) AS n FROM `recomendacao` WHERE `conta_id` = :id AND `tipo` = 0 ;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
         try {
@@ -128,7 +128,7 @@ class Conta {
     }
 
     public function viewRecomendacoesContratante() {
-        $query = "SELECT AVG(nota) FROM `recomendacoes` WHERE `conta_id` = :id AND `tipo` = 1 ;";
+        $query = "SELECT AVG(nota) AS n FROM `recomendacao` WHERE `conta_id` = :id AND `tipo` = 1 ;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
         try {
@@ -141,7 +141,20 @@ class Conta {
     }
 
     public function viewServPrestados() {
-        $query = "SELECT * FROM `publicacao` WHERE `id` = (SELECT publicacao_id FROM recomendacao WHERE conta_id = :id);";
+        $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `publicacao`.`id` = (SELECT publicacao_id FROM recomendacao WHERE conta_id = :id) AND `publicacao`.`categoria_id` = `categoria`.`id`;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $this->id);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function viewNotasContratante() {
+        $query = "SELECT count(nota) AS n FROM `recomendacao` WHERE `conta_id` = :id AND `tipo` = 1 ;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
         try {
@@ -154,9 +167,51 @@ class Conta {
     }
 
     public function viewServSolicitados() {
-        $query = "SELECT * FROM `publicacao` WHERE `conta_id` = :id;";
+        $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `conta_id` = :id AND `publicacao`.`categoria_id` = `categoria`.`id`;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function viewCategorias() {
+        $query = "SELECT * FROM `categoria` ORDER BY nome;";
+        $stmt = $this->conn->prepare($query);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function criaPublicacao($categoria_id, $titulo, $descricao, $tipo) {
+        $query = "INSERT INTO `publicacao` VALUES (DEFAULT, :conta_id, :categoria_id, :titulo, :descricao, 0, :tipo);";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":conta_id", $this->id);
+        $stmt->bindParam(":categoria_id", $categoria_id);
+        $stmt->bindParam(":titulo", $titulo);
+        $stmt->bindParam(":descricao", $descricao);
+        $stmt->bindParam(":tipo", $tipo);
+        try {
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function viewPublicacao($id) {
+        $query = "SELECT *, conta.nome AS pnome, categoria.nome AS cnome FROM `publicacao` JOIN categoria JOIN conta WHERE categoria.id = :id AND conta_id = conta.id AND categoria.id = categoria_id;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
         try {
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_OBJ);
