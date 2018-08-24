@@ -1058,5 +1058,9 @@ select.form-control {
 
 .botao-index{
   margin-top: 12.5px;
-  margin-right: 5px;
+  margin-right: 7.5px;
+}
+
+.index-texto{
+  font-size: 125%;
 }
