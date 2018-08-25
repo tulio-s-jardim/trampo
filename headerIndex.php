@@ -19,14 +19,13 @@
 	<![endif]-->
 </head>
 <body>
-	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+	<nav class="navbar navbar-custom navbar-fixed-top"">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#"><img src="img/logo.png" class="img-responsive" alt="Trampo"></a>
-				<div class="nav navbar-top-links navbar-right">
-					<button onclick="window.location.href='login.php'" class="btn btn-md btn-default botao-index"><b>Fazer Login</b></button>
-					<button onclick="window.location.href='formularioCadastra.php'" class="btn btn-md btn-default botao-index"><b>Cadastrar</b></button>
-				</div>
+					<div class="nav navbar-top-links navbar-right">
+						<button onclick="window.location.href='login.php'" class="btn btn-md btn-default botao-index"><b>Fazer Login</b></button>
+					</div>
 			</div>
 		</div><!-- /.container-fluid -->
 	</nav>

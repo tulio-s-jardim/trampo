@@ -1058,9 +1058,19 @@ select.form-control {
 
 .botao-index{
   margin-top: 12.5px;
-  margin-right: 7.5px;
+  margin-right: 10px;
+  float: right;
 }
 
 .index-texto{
   font-size: 125%;
+}
+
+.cadastra-index{
+  font-size: 125%;
+}
+
+.subtitulo-index{
+  font-size: 150%;
+  color: #111;
 }
