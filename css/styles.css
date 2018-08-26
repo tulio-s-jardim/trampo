@@ -1063,11 +1063,15 @@ select.form-control {
 }
 
 .index-texto{
+  margin-top: -15px;
+  margin-bottom: 30px;
   font-size: 125%;
 }
 
-.cadastra-index{
+#cadastra-index{
   font-size: 125%;
+  color: #777;
+  text-decoration: none;
 }
 
 .subtitulo-index{

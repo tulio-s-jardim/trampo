@@ -11,7 +11,7 @@ include_once('headerIndex.php');
 		<h2 class="subtitulo-index"><b>Qual é o preço para se ter acesso à ferramenta?</b></h2>
 		<p class="index-texto"><b>A ferramenta é gratuita, ou em forma de jargão brasileiro: "de grátis"</b></p>
 		<h2 class="subtitulo-index"><b>Ficou interessado? </b></h2>
-		<a href="formularioCadastra.php" class="cadastra-index"><b><p>Cadastre-se neste link</p></b></a>
+		<a href="formularioCadastra.php" id="cadastra-index"><b>Cadastre-se neste link</b></a>
 
 
 	</div>

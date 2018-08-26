@@ -11,18 +11,11 @@
 	$bairro = $_POST["bairro"];
 	$senha = $_POST["senha"];
 
-	function listaUsuarios(){
 		$usuarios = array();
-		$resultado = mysqli_query($conexao, "select * from conta");
-		while($usuario = mysqli_fetch_assoc($resultado)){
-			array_push($usuarios, $usuario);
+		$resultado = mysqli_query($conexao, "select celular,email from conta");
+		while($u = mysqli_fetch_assoc($resultado)){
+			array_push($usuarios, $u);
 		}
-
-	return $usuarios;
-	}
-
-	function cadastraU(){
-		$usuarios = listaUsuarios();
 
 		foreach ($usuarios as $usuario) {
 			if($usuario['celular'] == $celular){
@@ -38,7 +31,6 @@
 			$query="insert into conta (nome, sobrenome, email, senha, celular, bairro_id) values ('{$nome}', '{$sobrenome}', '{$email}', '{$senha}', '{$celular}', '1')";
 			mysqli_query($conexao, $query);
 		}
-	}
 
 	echo "cadastrado!";
 ?>
