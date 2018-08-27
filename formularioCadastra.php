@@ -1,3 +1,29 @@
+<?php
+include_once('php/conta.php');
+
+$conta = new Conta();
+
+if(isset($_POST['nome'])) {
+	$conta->setNome($_POST["nome"]);
+	$conta->setSobrenome($_POST["sobrenome"]);
+	$conta->setEmail($_POST["email"]);
+	$conta->setCelular($_POST["celular"]);
+	$conta->setBairro_id($_POST["bairro"]);
+	$conta->setSenha(sha1($_POST["senha"]));
+
+	if ($conta->estaCadastrado($_POST['celular'], $_POST['email'])) {
+		$cadastrado = -2;
+	}else if ($conta->estaCadastradoCelular($_POST['celular'])) {
+		$cadastrado = -1;
+	} else if ($conta->estaCadastradoEmail($_POST['email'])) {
+		$cadastrado = 0;
+	} else {
+		$cadastrado = 1;
+		$conta->insert();
+		header('Location: perfil.php');
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +44,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Cadastro</div>
 				<div class="panel-body">
-					<form role="form" action="cadastraUsuario.php" method="post">
+					<form role="form" action="formularioCadastra.php" method="post">
+						<?php if(isset($cadastrado) && $cadastrado!=1) {?>
+							<div class="col-md-12">
+								<div class="panel">
+									<div class="panel-body fracasso">
+										<p><b><?= $cadastrado==-2?'E-mail e celular já cadastrados no sistema!':($cadastrado==-1?'Celular já cadastrado no sistema!':"E-mail já cadastrado no sistema!"); ?></b></p>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
 						<div class="form-group">
 							<input class="form-control" placeholder="Nome" name="nome" type="text" autofocus="">
 						</div>

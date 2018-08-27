@@ -29,6 +29,15 @@ include_once('header.php');
 				<div class="panel panel-default">
 					<div class="panel-heading">Perfil de <?php echo $c->nome ?></div>
 					<div class="panel-body">
+						<?php if(isset($cadastrado)) {?>
+							<div class="col-md-12">
+								<div class="panel">
+									<div class="panel-body sucesso">
+										<p><b>Perfil criado com sucesso!</b></p>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
 						<div class="col-md-6">
 							<label>Nome</label>
 							<p><?php echo $c->nome . " " .  $c->sobrenome ?></p>

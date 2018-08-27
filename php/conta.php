@@ -43,6 +43,11 @@ class Conta {
         return 1;
     }
 
+    public function setCelular($email) {
+        $this->celular = $email;
+        return 1;
+    }
+
     public function setSenha($senha) {
         $this->senha = $senha;
         return 1;
@@ -101,6 +106,49 @@ class Conta {
         try {
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function estaCadastrado($celular, $email) {
+        $query = "SELECT * FROM `conta` WHERE `celular` = :celular AND `email` = :email ;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":celular", $celular);
+        $stmt->bindParam(":email", $email);
+        try {
+            $stmt->execute();
+            $x = $stmt->fetch(PDO::FETCH_OBJ);
+            return !empty($x);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function estaCadastradoCelular($celular) {
+        $query = "SELECT * FROM `conta` WHERE `celular` = :celular";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":celular", $celular);
+        try {
+            $stmt->execute();
+            $x = $stmt->fetch(PDO::FETCH_OBJ);
+            return !empty($x);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function estaCadastradoEmail($email) {
+        $query = "SELECT * FROM `conta` WHERE `email` = :email ;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $email);
+        try {
+            $stmt->execute();
+            $x = $stmt->fetch(PDO::FETCH_OBJ);
+            return !empty($x);
         } catch (PDOException $e) {
             echo $e->getMessage();
             return null;

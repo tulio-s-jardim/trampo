@@ -1056,3 +1056,36 @@ select.form-control {
   color: #111;
   margin: auto;
 }
+
+.fracasso {
+  background-color: #f9243f;
+  border-radius: 10px;
+}
+
+.fracasso p {
+  color: #111;
+  margin: auto;
+}
+
+.botao-index{
+  margin-top: 12.5px;
+  margin-right: 10px;
+  float: right;
+}
+
+.index-texto{
+  margin-top: -15px;
+  margin-bottom: 30px;
+  font-size: 125%;
+}
+
+#cadastra-index{
+  font-size: 125%;
+  color: #777;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.subtitulo-index{
+  font-size: 150%;
+}
