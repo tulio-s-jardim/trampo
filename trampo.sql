@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `trampo`.`conta` (
   `celular` VARCHAR(11) NOT NULL,
   `bairro_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -92,8 +92,7 @@ CREATE TABLE IF NOT EXISTS `trampo`.`publicacao` (
   `categoria_id` INT(10) UNSIGNED NOT NULL,
   `titulo` VARCHAR(45) NOT NULL,
   `descricao` TEXT NOT NULL,
-  `status` TINYINT(3) UNSIGNED NOT NULL,
-  `tipo` TINYINT(3) UNSIGNED NOT NULL,
+  `status` TINYINT(3) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `fk_publicacao_categoria1_idx` (`categoria_id` ASC),
   INDEX `fk_publicacao_conta1_idx` (`conta_id` ASC),
@@ -117,6 +116,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `trampo`.`respostas` (
   `conta_id` INT(10) UNSIGNED NOT NULL,
   `publicacao_id` INT(10) UNSIGNED NOT NULL,
+  `visualizado` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`conta_id`, `publicacao_id`),
   INDEX `fk_conta_has_publicacao1_publicacao1_idx` (`publicacao_id` ASC),
   INDEX `fk_conta_has_publicacao1_conta1_idx` (`conta_id` ASC),

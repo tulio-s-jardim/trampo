@@ -1,5 +1,5 @@
 body {
-  background: #f1f4f7;
+  background: #e5e5e5;
   padding-top: 60px;
   font-size: 14px;
   color: #444444;
@@ -1049,32 +1049,10 @@ select.form-control {
 
 .sucesso {
   background-color: #b9db87;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
-.cadastra {
-  margin-left: 5px;
-}
-
-.botao-index{
-  margin-top: 12.5px;
-  margin-right: 10px;
-  float: right;
-}
-
-.index-texto{
-  margin-top: -15px;
-  margin-bottom: 30px;
-  font-size: 125%;
-}
-
-#cadastra-index{
-  font-size: 125%;
-  color: #777;
-  text-decoration: none;
-}
-
-.subtitulo-index{
-  font-size: 150%;
+.sucesso p {
   color: #111;
+  margin: auto;
 }

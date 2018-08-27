@@ -4,6 +4,7 @@ include_once('php/conta.php');
 $conta = new Conta();
 $conta->setId(1);
 $p = $conta->viewPublicacao($_GET['id']);
+$r = $conta->viewRespostas($_GET['id']);
 
 include_once('header.php');
 ?>		
@@ -44,11 +45,53 @@ include_once('header.php');
 				<div class="col-md-6 justify-content-md-center">
 					<button name="cria" class="btn-primary btn btn-lg" type="submit" required>Responder Publicação</button>
 				</div>
+				<?php if($p->status != 0) { ?>
 				<div class="col-md-6 justify-content-md-center">
 					<p>Completo por x</p>
 				</div>
+				<?php } ?>
 			</div>
 		</div><!-- /.panel-->
+		
+		<?php if(sizeof($r) > 0) { ?>
+		<div class="panel panel-default articles">
+			<div class="panel-heading">
+				Quem topa o serviço
+				<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
+			<div class="panel-body articles-container">
+				<div class="article border-bottom">
+					<div class="col-xs-12">
+						<div class="row">
+							<div class="col-xs-6 col-md-6 date">
+								<h4><b>Nome</b></h4>
+							</div>
+							<div class="col-xs-6 col-md-6 date">
+								<h4><b>Número de Celular</b></h4>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div><!--End .article-->
+				<?php
+				for($i=0;$i<sizeof($r);$i++) { ?>
+				<div class="article border-bottom">
+					<div class="col-xs-12">
+						<div class="row">
+							<div class="col-xs-6 col-md-6 date">
+								<h4><?php echo $r[$i]->nome ?></h4>
+							</div>
+							<div class="col-xs-6 col-md-6 date">
+								<h4><a href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($p->titulo) ?>%22."><?php echo $r[$i]->celular ?></a></h4>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div><!--End .article-->
+				<?php } ?>
+			</div>
+		</div><!--End .articles-->
+		<?php } ?>
+
 			<div class="col-sm-12">
 				<p class="back-link">Trampo possui sua base em <a href="https://www.medialoot.com">Lumino</a></p>
 			</div>
