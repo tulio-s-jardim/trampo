@@ -53,6 +53,12 @@ class Conta {
         return 1;
     }
 
+    function myUrlEncode($string) {
+        $entities = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F', '%25', '%23', '%5B', '%5D');
+        $replacements = array('!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]");
+        return str_replace($entities, $replacements, rawurlencode($string));
+    }
+
     public function insert(){
         $query = "INSERT INTO conta(nome, sobrenome, email, senha, celular, bairro_id) VALUES (:nome, :sobrenome, :email, :senha, :celular, :bairro_id)";
         $stmt = $this->conn->prepare($query);
@@ -191,14 +197,13 @@ class Conta {
         }
     }
 
-    public function criaPublicacao($categoria_id, $titulo, $descricao, $tipo) {
-        $query = "INSERT INTO `publicacao` VALUES (DEFAULT, :conta_id, :categoria_id, :titulo, :descricao, 0, :tipo);";
+    public function criaPublicacao($categoria_id, $titulo, $descricao) {
+        $query = "INSERT INTO `publicacao` VALUES (DEFAULT, :conta_id, :categoria_id, :titulo, :descricao, 0);";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":conta_id", $this->id);
         $stmt->bindParam(":categoria_id", $categoria_id);
         $stmt->bindParam(":titulo", $titulo);
         $stmt->bindParam(":descricao", $descricao);
-        $stmt->bindParam(":tipo", $tipo);
         try {
             $stmt->execute();
             return 1;
@@ -209,12 +214,25 @@ class Conta {
     }
 
     public function viewPublicacao($id) {
-        $query = "SELECT *, conta.nome AS pnome, categoria.nome AS cnome FROM `publicacao` JOIN categoria JOIN conta WHERE categoria.id = :id AND conta_id = conta.id AND categoria.id = categoria_id;";
+        $query = "SELECT *, conta.nome AS pnome, categoria.nome AS cnome FROM `publicacao` JOIN categoria JOIN conta WHERE publicacao.id = :id AND conta_id = conta.id AND categoria.id = categoria_id;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         try {
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function viewRespostas($id) {
+        $query = "SELECT * FROM `respostas` JOIN conta WHERE publicacao_id = :id AND conta_id = conta.id;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             echo $e->getMessage();
             return null;

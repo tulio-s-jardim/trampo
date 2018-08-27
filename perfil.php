@@ -90,7 +90,7 @@ include_once('header.php');
 								<div class="text-muted">Categoria</div>
 							</div>
 							<div class="col-xs-10 col-md-10">
-								<h4><a href="publicacao.php?id=<?php echo $p[$i]->id ?>"><?php echo $p[$i]->titulo ?></a></h4>
+								<h4><a href="publicacao.php?id=<?php echo $p[$i]->pubid ?>"><?php echo $p[$i]->titulo ?></a></h4>
 								<p><?php echo $p[$i]->descricao ?></p>
 							</div>
 						</div>
@@ -99,7 +99,8 @@ include_once('header.php');
 				</div><!--End .article-->
 				<?php } ?>
 			</div>
-		</div><!--End .articles--><div class="panel panel-default articles">
+		</div><!--End .articles-->
+		<div class="panel panel-default articles">
 			<div class="panel-heading">
 				Serviços Solicitados
 				<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
@@ -114,7 +115,7 @@ include_once('header.php');
 								<div class="text-muted">Categoria</div>
 							</div>
 							<div class="col-xs-10 col-md-10">
-								<h4><a href="publicacao.php?id=<?php echo $s[$i]->id ?>"><?php echo $s[$i]->titulo ?></a></h4>
+								<h4><a href="publicacao.php?id=<?php echo $s[$i]->pubid ?>"><?php echo $s[$i]->titulo ?></a></h4>
 								<p><?php $out = strlen($s[$i]->descricao) > 255 ? substr($s[$i]->descricao,0,255)."..." : $s[$i]->descricao; echo $out ?></p>
 							</div>
 						</div>

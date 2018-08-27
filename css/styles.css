@@ -1,5 +1,5 @@
 body {
-  background: #f1f4f7;
+  background: #e5e5e5;
   padding-top: 60px;
   font-size: 14px;
   color: #444444;
@@ -1049,9 +1049,10 @@ select.form-control {
 
 .sucesso {
   background-color: #b9db87;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
-.cadastra {
-  margin-left: 5px;
+.sucesso p {
+  color: #111;
+  margin: auto;
 }

@@ -5,7 +5,7 @@ $conta = new Conta();
 $conta->setId(1);
 
 if(isset($_POST['cria'])) {
-	$conta->criaPublicacao($_POST['categoria'], $_POST['titulo'], $_POST['descricao'], $_POST['tipo']);
+	$conta->criaPublicacao($_POST['categoria'], $_POST['titulo'], $_POST['descricao']);
 }
 include_once('header.php');
 ?>		
@@ -25,14 +25,14 @@ include_once('header.php');
 			<?php if(isset($_POST['cria'])) {?>
 				<div class="col-md-12">
 					<div class="panel">
-						<div class="panel-body sucesso" style="background-color: #b9db87; border-radius: 10px;">
-							<p style=" color: #111; margin: auto"><b>Publicação criada com sucesso!</b></p>
+						<div class="panel-body sucesso">
+							<p><b>Publicação criada com sucesso!</b></p>
 						</div>
 					</div>
 				</div>
 			<?php } ?>
 				<form name="cria" method="post" action="criaPublicacao.php" enctype="multipart/form-data">
-					<div class="col-md-6 form-group">
+					<div class="col-md-12 form-group">
 						<label>Categoria</label>
 						<select name="categoria" class="form-control"  required>
 							<?php
@@ -40,13 +40,6 @@ include_once('header.php');
 							for($i=0;$i<sizeof($cat);$i++) { ?>
 								<option value="<?php echo $cat[$i]->id ?>"><?php echo $cat[$i]->nome; ?></option>
 							<?php }?>
-						</select>
-					</div>
-					<div class="col-md-6 form-group">
-						<label>Cliente/Prestador</label>
-						<select name="tipo" class="form-control" required>
-							<option value="0">Cliente</option>
-							<option value="1">Prestador</option>
 						</select>
 					</div>
 					<div class="col-md-12 form-group">
