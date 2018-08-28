@@ -1074,18 +1074,27 @@ select.form-control {
 }
 
 .index-texto{
-  margin-top: -15px;
-  margin-bottom: 30px;
+  color: #444;
+  margin-bottom: 15px;
   font-size: 125%;
 }
 
 #cadastra-index{
   font-size: 125%;
-  color: #777;
+  color: #444;
   text-decoration: none;
-  border-radius: 10px;
 }
 
 .subtitulo-index{
   font-size: 150%;
+  background-color: #222;
+  color: #eee;
+  padding: 5px 10px 5px 10px;
+}
+
+.div-index{
+  background-color: #eee;
+  border: 1px solid black; 
+  padding: 0px 10px;
+  margin: 10px;
 }

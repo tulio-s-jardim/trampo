@@ -1,5 +1,5 @@
 <?php
-include_once('php/conta.php');
+include_once('php/functions.php');
 
 $conta = new Conta();
 
@@ -29,7 +29,7 @@ if(isset($_POST['nome'])) {
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Trampo - Login</title>
+	<title>Trampo - Cadastro</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">

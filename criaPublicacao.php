@@ -1,5 +1,5 @@
 <?php 
-include_once('php/conta.php');
+include_once('php/functions.php');
 
 $conta = new Conta();
 $conta->setId(1);
