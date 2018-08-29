@@ -20,7 +20,9 @@ include_once('headerIndex.php');
 		</div>
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>Ficou interessado? </b></h2>
-			<a href="formularioCadastra.php" id="cadastra-index"><b>Cadastre-se neste link</b></a>
+			<div class="div-cadastra-index">
+				<a href="formularioCadastra.php" id="cadastra-index"><b>Cadastre-se neste link</b></a>
+			</div>
 		</div>
 	</div>
 	<script src="js/jquery-1.11.1.min.js"></script>

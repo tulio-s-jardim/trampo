@@ -1075,7 +1075,7 @@ select.form-control {
 
 .index-texto{
   color: #444;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-size: 125%;
 }
 
@@ -1085,16 +1085,24 @@ select.form-control {
   text-decoration: none;
 }
 
+.div-cadastra-index{
+  margin-bottom: 10px;
+}
+
 .subtitulo-index{
   font-size: 150%;
   background-color: #222;
   color: #eee;
-  padding: 5px 10px 5px 10px;
+  padding: 5px 10px;
+  margin-top: 0px;
+  margin-left: -10px;
+  margin-right: -10px;
 }
 
 .div-index{
   background-color: #eee;
   border: 1px solid black; 
+  border-radius: 5px;
   padding: 0px 10px;
   margin: 10px;
 }
