@@ -1,3 +1,7 @@
+<?php
+	include_once('php/functions.php');
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +38,6 @@
 		<div class="profile-sidebar">
 			<div class="profile-usertitle">
 				<div class="profile-usertitle-name">Username</div>
-				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
 			</div>
 			<div class="clear"></div>
 		</div>
@@ -48,8 +51,6 @@
 				<ul class="children collapse" id="sub-item-1">
 					<li><a class="" href="#">
 						<span class="fa fa-arrow-right">&nbsp;</span>
-						<?php 
-						?>
 					</a></li>
 				</ul>
 			</li>

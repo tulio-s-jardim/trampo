@@ -55,24 +55,24 @@ if(isset($_POST['nome'])) {
 							</div>
 						<?php } ?>
 						<div class="form-group">
-							<input class="form-control" placeholder="Nome" name="nome" type="text" autofocus="">
+							<input class="form-control" placeholder="Nome" name="nome" type="text" autofocus="" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Sobrenome" name="sobrenome" type="text" autofocus="">
+							<input class="form-control" placeholder="Sobrenome" name="sobrenome" type="text" autofocus="" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
+							<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Celular" name="celular" type="number" autofocus="">
+							<input class="form-control" placeholder="Celular" name="celular" type="number" autofocus="" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Bairro" name="bairro" type="text" autofocus="">
+							<input class="form-control" placeholder="Bairro" name="bairro" type="text" autofocus="" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Senha" name="senha" type="password" value="">
+							<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
 						</div>
-						<button class="btn btn-primary cadastra" type="submit">Cadastrar</button>
+						<button class="btn btn-primary cadastra" type="submit" required>Cadastrar</button>
 					</form>
 				</div>
 			</div>

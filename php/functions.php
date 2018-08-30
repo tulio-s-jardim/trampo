@@ -155,6 +155,21 @@ class Conta {
         }
     }
 
+    public function estaCadastradoLogin($email, $senha) {
+        $query = "SELECT * FROM `conta` WHERE `email` = :email AND `senha` = :senha ;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":senha", $senha);
+        try {
+            $stmt->execute();
+            $x = $stmt->fetch(PDO::FETCH_OBJ);
+            return !empty($x);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
     public function viewRecomendacoes() {
         $query = "SELECT * FROM `recomendacoes` WHERE `conta_id` = :id ;";
         $stmt = $this->conn->prepare($query);

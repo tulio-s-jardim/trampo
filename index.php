@@ -16,12 +16,12 @@ include_once('headerIndex.php');
 		</div>
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>Qual é o preço para se ter acesso à ferramenta?</b></h2>
-			<p class="index-texto"><b>A ferramenta é gratuita, ou em forma de jargão brasileiro: "de grátis"</b></p>
+			<p class="index-texto"><b>A ferramenta é gratuita, ou em forma de jargão brasileiro: "de grátis".</b></p>
 		</div>
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>Ficou interessado? </b></h2>
 			<div class="div-cadastra-index">
-				<a href="formularioCadastra.php" id="cadastra-index"><b>Cadastre-se neste link</b></a>
+				<a href="formularioCadastra.php" id="cadastra-index"><b>> Cadastre-se neste link <</b></a>
 			</div>
 		</div>
 	</div>
