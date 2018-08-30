@@ -1,13 +1,9 @@
 <?php 
-include_once('php/conta.php');
-
-$conta = new Conta();
-$conta->setId(1);
+include_once('header.php');
 
 if(isset($_POST['cria'])) {
 	$conta->criaPublicacao($_POST['categoria'], $_POST['titulo'], $_POST['descricao']);
 }
-include_once('header.php');
 ?>		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">

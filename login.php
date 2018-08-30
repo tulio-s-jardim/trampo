@@ -1,3 +1,23 @@
+<?php
+include_once('php/conta.php');
+
+$conta = new Conta();
+
+if (isset($_SESSION)) {
+	session_unset();
+	session_destroy();
+}
+
+if (isset($_POST['login'])) {
+	echo $_POST['email'] . ' ' . sha1($_POST['senha']);
+	$uid = $conta->existe($_POST['email'], sha1($_POST['senha']));
+	if (!is_null($uid)) {
+        session_start();
+        $_SESSION["id"] = $uid;
+        header("Location: perfil.php");
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,21 +38,20 @@
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">Log in</div>
 				<div class="panel-body">
-					<form role="form">
-						<fieldset>
+					<form role="form" action="login.php" method="post">
 							<div class="form-group">
 								<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="Senha" name="password" type="password" value="">
+								<input class="form-control" placeholder="Senha" name="senha" type="password" value="">
 							</div>
 							<div class="checkbox">
 								<label>
 									<input name="remember" type="checkbox" value="Remember Me">Remember Me
 								</label>
 							</div>
-							<a href="criaPublicacao.php" class="btn btn-primary">Login</a>
-							<a href="formularioCadastra.php" class="btn btn-primary cadastra">Cadastrar</a></fieldset>
+							<button name="login" class="btn btn-primary" type="submit">Login</button>
+							<a href="formularioCadastra.php" class="btn btn-primary">Cadastrar</a>
 					</form>
 				</div>
 			</div>

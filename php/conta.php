@@ -112,6 +112,36 @@ class Conta {
         }
     }
 
+    public function existe($email, $senha) {
+        $query = "SELECT * FROM conta WHERE email = :email AND senha = :senha ;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":senha", $senha);
+        try {
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            if(!is_null($result)) {
+                return $result->id;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function exists() {
+        $query = "SELECT id FROM conta WHERE id = :id ;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $this->id);
+        try {
+            $stmt->execute();
+            return is_numeric($stmt->fetch(PDO::FETCH_OBJ)->id);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
     public function estaCadastrado($celular, $email) {
         $query = "SELECT * FROM `conta` WHERE `celular` = :celular AND `email` = :email ;";
         $stmt = $this->conn->prepare($query);

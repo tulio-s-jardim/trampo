@@ -1,3 +1,11 @@
+<?php
+include_once('php/conta.php');
+
+$conta = new Conta();
+session_start();
+$conta->setId($_SESSION['id']);
+$c = $conta->view();
+?>
 <!DOCTYPE html>
 <html>
 <head>

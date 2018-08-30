@@ -2,6 +2,11 @@
 include_once('php/conta.php');
 
 $conta = new Conta();
+session_start();
+if (isset($_SESSION)) {
+	session_unset();
+	session_destroy();
+}
 
 if(isset($_POST['nome'])) {
 	$conta->setNome($_POST["nome"]);
@@ -20,6 +25,12 @@ if(isset($_POST['nome'])) {
 	} else {
 		$cadastrado = 1;
 		$conta->insert();
+		$uid = $conta->existe($_POST['email'], sha1($_POST['senha']));
+		if (!is_null($uid)) {
+			session_start();
+			$_SESSION["id"] = $uid;
+			header("Location: perfil.php");
+		}
 		header('Location: perfil.php');
 	}
 }

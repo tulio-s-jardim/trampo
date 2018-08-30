@@ -1,12 +1,8 @@
 <?php 
-include_once('php/conta.php');
+include_once('header.php');
 
-$conta = new Conta();
-$conta->setId(1);
 $p = $conta->viewPublicacao($_GET['id']);
 $r = $conta->viewRespostas($_GET['id']);
-
-include_once('header.php');
 ?>		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
@@ -24,8 +20,8 @@ include_once('header.php');
 			<?php if(isset($_POST['cria'])) {?>
 				<div class="col-md-12">
 					<div class="panel">
-						<div class="panel-body sucesso" style="background-color: #b9db87; border-radius: 10px;">
-							<p style=" color: #111; margin: auto"><b>Publicação criada com sucesso!</b></p>
+						<div class="panel-body sucesso">
+							<p><b>Publicação criada com sucesso!</b></p>
 						</div>
 					</div>
 				</div>
