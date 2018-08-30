@@ -274,6 +274,18 @@ class Conta {
             return null;
         }
     }
+    public function viewCategoria($id) {
+        $query = "SELECT * FROM `categoria` WHERE id = :id ;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
 
     public function criaPublicacao($categoria_id, $titulo, $descricao) {
         $query = "INSERT INTO `publicacao` VALUES (DEFAULT, :conta_id, :categoria_id, :titulo, :descricao, 0);";
@@ -298,6 +310,19 @@ class Conta {
         try {
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function viewPublicacoes($id) {
+        $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria WHERE categoria_id = :id AND categoria.id = :id ;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             echo $e->getMessage();
             return null;

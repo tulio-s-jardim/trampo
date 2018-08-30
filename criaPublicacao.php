@@ -33,7 +33,6 @@ if(isset($_POST['cria'])) {
 						<label>Categoria</label>
 						<select name="categoria" class="form-control"  required>
 							<?php
-							$cat = $conta->viewCategorias();
 							for($i=0;$i<sizeof($cat);$i++) { ?>
 								<option value="<?php echo $cat[$i]->id ?>"><?php echo $cat[$i]->nome; ?></option>
 							<?php }?>

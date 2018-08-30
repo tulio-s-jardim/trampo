@@ -35,13 +35,36 @@ $c = $conta->view();
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
 				<a class="navbar-brand" href="#"><img src="img/logo.png" class="img-responsive" alt="Trampo"></a>
+				<ul class="nav navbar-top-links navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+						<em class="fa fa-bell"></em><span class="label label-info">5</span>
+					</a>
+						<ul class="dropdown-menu dropdown-alerts">
+							<li><a href="#">
+								<div><em class="fa fa-envelope"></em> 1 New Message
+									<span class="pull-right text-muted small">3 mins ago</span></div>
+							</a></li>
+							<li class="divider"></li>
+							<li><a href="#">
+								<div><em class="fa fa-heart"></em> 12 New Likes
+									<span class="pull-right text-muted small">4 mins ago</span></div>
+							</a></li>
+							<li class="divider"></li>
+							<li><a href="#">
+								<div><em class="fa fa-user"></em> 5 New Followers
+									<span class="pull-right text-muted small">4 mins ago</span></div>
+							</a></li>
+						</ul>
+					</li>
+				</ul>
 			</div>
 		</div><!-- /.container-fluid -->
 	</nav>
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<div class="profile-sidebar">
 			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">Username</div>
+				<div class="profile-usertitle-name"><?php echo $c->nome . ' ' . $c->sobrenome ?></div>
+				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
 			</div>
 			<div class="clear"></div>
 		</div>
@@ -53,9 +76,15 @@ $c = $conta->view();
 				<em class="fa fa-navicon">&nbsp;&nbsp;</em> Serviços Disponíveis<span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"></span>
 				</a>
 				<ul class="children collapse" id="sub-item-1">
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span>
-					</a></li>
+					<li>
+						<?php
+						$cat = $conta->viewCategorias();
+						for($i=0;$i<sizeof($cat);$i++) { ?>
+							<a class="" href="publicacoes.php?catid=<?php echo $cat[$i]->id ?>">
+							<span class="fa fa-arrow-right">&nbsp;</span> <?= $cat[$i]->nome; ?>
+							</a>
+						<?php } ?>
+					</li>
 				</ul>
 			</li>
 			<li><a href="login.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
