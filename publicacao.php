@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once('header.php');
 
 $p = $conta->viewPublicacao($_GET['id']);

@@ -1,5 +1,6 @@
-<?php 
+<?php
 include_once('header.php');
+
 
 if(isset($_POST['cria'])) {
 	$conta->criaPublicacao($_POST['categoria'], $_POST['titulo'], $_POST['descricao']);

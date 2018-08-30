@@ -37,12 +37,26 @@ if (isset($_POST['login'])) {
 		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">Log in</div>
+				<?php if($flag == "true"){?>
+					<div class="panel">
+						<div class="panel-body fracasso" id="login-msg">
+							<p><b>E-mail e senha não correspondentes</b></p>
+						</div>
+					</div>
+				<?php
+				}
+				?>
 				<div class="panel-body">
 					<form role="form" action="login.php" method="post">
+<<<<<<< HEAD
+=======
+						<fieldset>
+>>>>>>> master
 							<div class="form-group">
-								<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
+								<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" required>
 							</div>
 							<div class="form-group">
+<<<<<<< HEAD
 								<input class="form-control" placeholder="Senha" name="senha" type="password" value="">
 							</div>
 							<div class="checkbox">
@@ -52,6 +66,12 @@ if (isset($_POST['login'])) {
 							</div>
 							<button name="login" class="btn btn-primary" type="submit">Login</button>
 							<a href="formularioCadastra.php" class="btn btn-primary">Cadastrar</a>
+=======
+								<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
+							</div>
+							<button class="btn btn-primary" type="submit">Login</button>
+							<a href="formularioCadastra.php" class="btn btn-primary cadastra">Cadastrar</a></fieldset>
+>>>>>>> master
 					</form>
 				</div>
 			</div>
