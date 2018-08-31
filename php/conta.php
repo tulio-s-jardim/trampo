@@ -329,6 +329,19 @@ class Conta {
         }
     }
 
+    public function viewPublicacaoCompleta($id) {
+        $query = "SELECT conta.id, conta.nome, conta.sobrenome FROM `publicacao` JOIN respostas JOIN conta WHERE publicacao.id = :id AND respostas.visualizado = 2 AND respostas.conta_id = conta.id;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
     public function viewPublicacoes($id) {
         $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria WHERE categoria_id = :id AND categoria.id = :id ;";
         $stmt = $this->conn->prepare($query);
@@ -355,6 +368,20 @@ class Conta {
         }
     }
 
+    public function viewResposta($id, $conta) {
+        $query = "SELECT * FROM `respostas` JOIN conta WHERE publicacao_id = :id AND conta_id = :conta AND conta_id = conta.id;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":conta", $conta);
+        try {
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
     public function countRespostas() {
         $query = "SELECT count(*) AS c FROM `respostas` JOIN conta JOIN publicacao WHERE publicacao_id = publicacao.id AND publicacao.conta_id = :id AND visualizado = 0;";
         $stmt = $this->conn->prepare($query);
@@ -362,6 +389,62 @@ class Conta {
         try {
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_OBJ)->c;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function insereResposta($id) {
+        $query = "INSERT INTO respostas (conta_id, publicacao_id) VALUES (:cid, :id);";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":cid", $this->id);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function deletaResposta($id) {
+        $query = "DELETE FROM respostas WHERE publicacao_id = :id AND conta_id = :cid";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":cid", $this->id);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function resolve($id, $conta) {
+        $query = "SELECT * FROM respostas WHERE publicacao_id = :id AND conta_id = :cid;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":cid", $this->id);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return !empty($stmt->fetch(PDO::FETCH_OBJ));
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function respondi($id, $cid) {
+        $query = "UPDATE respostas WHERE publicacao_id = :id AND conta_id = :cid SET visualizado = 2;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":cid", $cid);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return !empty($stmt->fetch(PDO::FETCH_OBJ));
         } catch (PDOException $e) {
             echo $e->getMessage();
             return null;
