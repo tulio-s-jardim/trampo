@@ -83,7 +83,7 @@ class Conta {
     }
 
     public function edit(){
-        $query = "UPDATE `usuario` SET `email` = :email, `senha` = :senha, `celular` = :celular, `bairro_id` = :bairro_id WHERE `id` = :id ;";
+        $query = "UPDATE `conta` SET `email` = :email, `senha` = :senha, `celular` = :celular, `bairro_id` = :bairro_id WHERE `id` = :id ;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
         $stmt->bindParam(":email", $this->email);

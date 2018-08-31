@@ -47,11 +47,6 @@ if (isset($_POST['login'])) {
 							<div class="form-group">
 								<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
 							</div>
-							<div class="checkbox">
-								<label>
-									<input name="remember" type="checkbox" value="Remember Me">Lembrar-me
-								</label>
-							</div>
 							<button name="login" class="btn btn-primary" type="submit">Login</button>
 							<a href="formularioCadastra.php" class="btn btn-primary">Cadastrar</a>
 					</form>

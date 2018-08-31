@@ -65,7 +65,7 @@ if(isset($_GET['id']) && $conta->exists($_GET['id'])) {
 							<p><?php echo $a->celular ?></p>
 						</div>
 						<div class="col-md-6">
-							<button class="btn-primary btn btn-lg" href="#">Editar Perfil</button>
+							<a class="btn-primary btn btn-lg" href="formularioPerfil.php">Editar Perfil</a>
 						</div>
 						<?php }?>
 					</div>
