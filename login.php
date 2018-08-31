@@ -1,6 +1,7 @@
 <?php
 include_once('php/conta.php');
 
+$flag = 0;
 $conta = new Conta();
 
 session_start();
@@ -11,12 +12,14 @@ if (isset($_SESSION)) {
 }
 
 if (isset($_POST['login'])) {
-	echo $_POST['email'] . ' ' . sha1($_POST['senha']);
 	$uid = $conta->existe($_POST['email'], sha1($_POST['senha']));
 	if (!is_null($uid)) {
         session_start();
         $_SESSION["id"] = $uid;
         header("Location: perfil.php");
+	}
+	else{
+		$flag = 1;
 	}
 }
 ?>
@@ -41,14 +44,21 @@ if (isset($_POST['login'])) {
 				<div class="panel-heading">Login</div>
 				<div class="panel-body">
 					<form role="form" action="login.php" method="post">
-							<div class="form-group">
-								<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" required>
-							</div>
-							<div class="form-group">
-								<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
-							</div>
-							<button name="login" class="btn btn-primary" type="submit">Login</button>
-							<a href="formularioCadastra.php" class="btn btn-primary">Cadastrar</a>
+						<?php
+							if($flag == 1){ ?>
+								<div class="panel-body fracasso form-group">
+									<p><b>E-mail e senha não correspondentes</b></p>
+								</div>
+							<?php }
+						?>
+						<div class="form-group">
+							<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" required>
+						</div>
+						<div class="form-group">
+							<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
+						</div>
+						<button name="login" class="btn btn-primary" type="submit">Login</button>
+						<a href="formularioCadastra.php" class="btn btn-primary">Cadastrar</a>
 					</form>
 				</div>
 			</div>

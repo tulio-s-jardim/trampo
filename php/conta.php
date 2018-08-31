@@ -133,7 +133,7 @@ class Conta {
         try {
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_OBJ);
-            if(!is_null($result)) {
+            if(!empty($result)) {
                 return $result->id;
             }
         } catch (PDOException $e) {

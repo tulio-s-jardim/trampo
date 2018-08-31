@@ -19,8 +19,8 @@ if(isset($_GET['id']) && $conta->exists($_GET['id'])) {
 				<li><a href="#">
 					<em class="fa fa-home"></em>
 				</a></li>
-				<li class="active">Perfis</li>
-				<?= $meuPerfil?'<li class="active">Meu Perfil</li>':''?>
+				<?= $meuPerfil?'<li class="active">Meu Perfil</li>':'<li class="active">Perfis</li>
+'?>
 			</ol>
 		</div><!--/.row-->
 		
@@ -64,8 +64,8 @@ if(isset($_GET['id']) && $conta->exists($_GET['id'])) {
 							<label>Celular</label>
 							<p><?php echo $a->celular ?></p>
 						</div>
-						<div class="col-md-6">
-							<a class="btn-primary btn btn-lg" href="formularioPerfil.php">Editar Perfil</a>
+						<div class="col-md-6 botao-edita-perfil">
+							<a class="btn-primary btn btn-md" href="formularioPerfil.php">Editar Perfil</a>
 						</div>
 						<?php }?>
 					</div>

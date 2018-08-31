@@ -1107,6 +1107,10 @@ select.form-control {
   margin: 10px;
 }
 
+.botao-edita-perfil{
+  margin-top: 10px;
+}
+
 #login-msg{
   padding: 0px;
 }

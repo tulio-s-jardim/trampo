@@ -71,7 +71,7 @@
 							<input class="form-control" placeholder="Nova senha" name="senha_nova" type="password">
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Confirmar senha" name="senha_confirmar" type="password">
+							<input class="form-control" placeholder="Confirmar nova senha" name="senha_confirmar" type="password">
 						</div>
 						<button class="btn btn-primary cadastra" type="submit" name="alterar" required>Alterar</button>
 					</form>
