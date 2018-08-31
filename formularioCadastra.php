@@ -1,5 +1,5 @@
 <?php
-include_once('php/functions.php');
+include_once('php/conta.php');
 
 $conta = new Conta();
 session_start();
