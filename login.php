@@ -43,7 +43,7 @@ if (isset($_POST['login'])) {
 								<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" required>
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="Senha" name="senha" type="password" value="">
+								<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
 							</div>
 							<div class="checkbox">
 								<label>
