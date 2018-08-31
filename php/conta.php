@@ -112,6 +112,19 @@ class Conta {
         }
     }
 
+    public function viewPerfil($id) {
+        $query = "SELECT * FROM `conta` WHERE `id` = :id ;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
     public function existe($email, $senha) {
         $query = "SELECT * FROM conta WHERE email = :email AND senha = :senha ;";
         $stmt = $this->conn->prepare($query);
@@ -129,13 +142,13 @@ class Conta {
         }
     }
 
-    public function exists() {
+    public function exists($id) {
         $query = "SELECT id FROM conta WHERE id = :id ;";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":id", $id);
         try {
             $stmt->execute();
-            return is_numeric($stmt->fetch(PDO::FETCH_OBJ)->id);
+            return !empty($stmt->fetch(PDO::FETCH_OBJ));
         } catch (PDOException $e) {
             echo $e->getMessage();
             return null;
@@ -224,10 +237,10 @@ class Conta {
         }
     }
 
-    public function viewServPrestados() {
+    public function viewServPrestados($id) {
         $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `publicacao`.`id` = (SELECT publicacao_id FROM recomendacao WHERE conta_id = :id) AND `publicacao`.`categoria_id` = `categoria`.`id`;";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":id", $id);
         try {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -250,10 +263,10 @@ class Conta {
         }
     }
 
-    public function viewServSolicitados() {
+    public function viewServSolicitados($id) {
         $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `conta_id` = :id AND `publicacao`.`categoria_id` = `categoria`.`id`;";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":id", $id);
         try {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -336,6 +349,19 @@ class Conta {
         try {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function countRespostas() {
+        $query = "SELECT count(*) AS c FROM `respostas` JOIN conta JOIN publicacao WHERE publicacao_id = publicacao.id AND publicacao.conta_id = :id AND visualizado = 0;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $this->id);
+        try {
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_OBJ)->c;
         } catch (PDOException $e) {
             echo $e->getMessage();
             return null;
