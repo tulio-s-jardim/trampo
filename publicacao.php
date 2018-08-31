@@ -28,7 +28,7 @@ $r = $conta->viewRespostas($_GET['id']);
 			<?php } ?>
 				<div class="col-md-6 form-group">
 					<label>Contratante</label>
-					<p><?php echo $p->pnome ?></p>
+					<p><a href="perfil?id=<?= $p->conta_id ?>"><?php echo $p->pnome ?></a></p>
 				</div>
 				<div class="col-md-6 form-group">
 					<label>Categoria</label>
@@ -74,7 +74,7 @@ $r = $conta->viewRespostas($_GET['id']);
 					<div class="col-xs-12">
 						<div class="row">
 							<div class="col-xs-6 col-md-6 date">
-								<h4><?php echo $r[$i]->nome ?></h4>
+								<h4><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></h4>
 							</div>
 							<div class="col-xs-6 col-md-6 date">
 								<h4><a href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($p->titulo) ?>%22."><?php echo $r[$i]->celular ?></a></h4>
