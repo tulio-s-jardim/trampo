@@ -3,6 +3,10 @@ include_once('php/conta.php');
 
 $conta = new Conta();
 session_start();
+if (!isset($_SESSION)) {
+	header("Location: index.php");
+}
+
 $conta->setId($_SESSION['id']);
 $c = $conta->view();
 ?>
@@ -41,16 +45,6 @@ $c = $conta->view();
 					</a>
 						<ul class="dropdown-menu dropdown-alerts">
 							<li><a href="#">
-								<div><em class="fa fa-envelope"></em> 1 New Message
-									<span class="pull-right text-muted small">3 mins ago</span></div>
-							</a></li>
-							<li class="divider"></li>
-							<li><a href="#">
-								<div><em class="fa fa-heart"></em> 12 New Likes
-									<span class="pull-right text-muted small">4 mins ago</span></div>
-							</a></li>
-							<li class="divider"></li>
-							<li><a href="#">
 								<div><em class="fa fa-user"></em> 5 New Followers
 									<span class="pull-right text-muted small">4 mins ago</span></div>
 							</a></li>
@@ -87,6 +81,6 @@ $c = $conta->view();
 					</li>
 				</ul>
 			</li>
-			<li><a href="login.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li><a href="login.php"><em class="fa fa-power-off">&nbsp;</em> Desconectar</a></li>
 		</ul>
 	</div><!--/.sidebar-->
