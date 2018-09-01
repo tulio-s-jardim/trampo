@@ -33,7 +33,7 @@ $s = $conta->viewPublicacoes($_GET['catid']);
 								<div class="text-muted">Categoria</div>
 							</div>
 							<div class="col-xs-10 col-md-10">
-								<h4><a href="publicacao.php?id=<?php echo $s[$i]->pid ?>"><?php echo $s[$i]->titulo ?></a></h4>
+								<h4><a href="publicacao.php?id=<?= $s[$i]->pid ?>"><?= $s[$i]->titulo ?></a></h4>
 								<p><?php $out = strlen($s[$i]->descricao) > 255 ? substr($s[$i]->descricao,0,255)."..." : $s[$i]->descricao; echo $out ?></p>
 							</div>
 						</div>

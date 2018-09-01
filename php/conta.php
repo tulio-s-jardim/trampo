@@ -383,7 +383,7 @@ class Conta {
     }
 
     public function countRespostas() {
-        $query = "SELECT count(*) AS c FROM `respostas` JOIN conta JOIN publicacao WHERE publicacao_id = publicacao.id AND publicacao.conta_id = :id AND visualizado = 0;";
+        $query = "SELECT count(visualizado) AS c FROM `respostas` JOIN publicacao WHERE publicacao_id = publicacao.id AND publicacao.conta_id = :id AND visualizado = 0;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
         try {
@@ -423,7 +423,7 @@ class Conta {
         }
     }
 
-    public function resolve($id, $conta) {
+    public function respondi($id) {
         $query = "SELECT * FROM respostas WHERE publicacao_id = :id AND conta_id = :cid;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":cid", $this->id);
@@ -437,7 +437,7 @@ class Conta {
         }
     }
 
-    public function respondi($id, $cid) {
+    public function resolve($id, $cid) {
         $query = "UPDATE respostas WHERE publicacao_id = :id AND conta_id = :cid SET visualizado = 2;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":cid", $cid);

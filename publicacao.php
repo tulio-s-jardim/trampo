@@ -47,10 +47,10 @@ if(isset($_POST['responde'])) {
 				</div>
 				<div class="col-md-6 justify-content-md-center">
 					<form role="form" action="publicacao.php?id=<?= $_GET['id']; ?>" method="post">
-						<?php if(!$conta->respondi($_GET['id'])) { ?>
-						<button name="responde" class="btn-primary btn btn-lg" type="submit">Responder Publicação</button>
+						<?php if(!$conta->respondi($_GET['id'], $_SESSION['id'])) { ?>
+						<button name="responde" class="btn-primary btn btn-md" type="submit">Responder Publicação</button>
 						<?php } else { ?>
-						<button name="excluir" class="btn-primary btn btn-lg" type="submit">Excluir minha resposta</button>
+						<button name="excluir" class="btn-primary btn btn-md" type="submit">Excluir minha resposta</button>
 						<?php }?>
 					</form>
 				</div>

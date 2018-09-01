@@ -27,32 +27,31 @@
 				<li><a href="#">
 					<em class="fa fa-home"></em>
 				</a></li>
-				<li class="active">Perfis</li>
 				<li class="active">Meu Perfil</li>
+				<li class="active">Editar Perfil</li>
 			</ol>
 		</div><!--/.row-->
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Meu Perfil</h1>
+				<h1 class="page-header">Editar Perfil</h1>
 			</div>
 		</div><!--/.row-->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
-				<div class="panel-heading">Editar Perfil</div>
 				<div class="panel-body">
 					<form role="form" action="formularioPerfil.php" method="post">
 						<?php
 							if($flag == 1){ ?>
-								<div class="panel-body fracasso">
+								<div class="panel-body fracasso form-group" align="center">
 									<p><b>A senha atual não foi informada corretamente</b></p>
 								</div>
 							<?php }
 							else if($flag == 2){ ?>
-								<div class="panel-body fracasso">
-									<p><b>A nova senha não é a mesma que a senha confirmada<p></p>
-								</b>
+								<div class="panel-body fracasso form-group" align="center">
+									<p><b>Nova senha e senha confirmada não são as mesmas</b></p>
+								</div>
 							<?php }
 						?>
 						<div class="form-group">
