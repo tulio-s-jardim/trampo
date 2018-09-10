@@ -13,8 +13,14 @@ if(isset($_POST['nome'])) {
 	$conta->setSobrenome($_POST["sobrenome"]);
 	$conta->setEmail($_POST["email"]);
 	$conta->setCelular($_POST["celular"]);
-	$conta->setBairro_id($_POST["bairro"]);
 	$conta->setSenha(sha1($_POST["senha"]));
+	$cep = str_replace("-", "", $_POST['cep']);
+	// set feed URL
+	$url = 'https://api.postmon.com.br/v1/cep/'.$cep.'?format=xml';
+
+	$sxml = simplexml_load_file($url)
+	// then you can do
+	var_dump($sxml);
 
 	if ($conta->estaCadastrado($_POST['celular'], $_POST['email'])) {
 		$cadastrado = -2;
@@ -55,7 +61,7 @@ if(isset($_POST['nome'])) {
 			<div class="panel panel-default">
 				<div class="panel-heading">Cadastro</div>
 				<div class="panel-body">
-					<form role="form" action="formularioCadastra.php" method="post">
+					<form role="form" name="criarMembro" action="teste.php" method="post">
 						<?php if(isset($cadastrado) && $cadastrado!=1) {?>
 							<div class="col-md-12">
 								<div class="panel">
@@ -69,16 +75,16 @@ if(isset($_POST['nome'])) {
 							<input class="form-control" placeholder="Nome" name="nome" type="text" autofocus="" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Sobrenome" name="sobrenome" type="text" autofocus="" required>
+							<input class="form-control" placeholder="Sobrenome" name="sobrenome" type="text"required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" required>
+							<input class="form-control" placeholder="E-mail" name="email" type="email"" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Celular" name="celular" type="number" autofocus="" required>
+							<input class="form-control" placeholder="Celular" name="celular" type="text" onkeypress="MascaraCelular(criarMembro.celular, 'celular');" id="celular" maxlength="18" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Bairro" name="bairro" type="text" autofocus="" required>
+							<input class="form-control" placeholder="Cep" onkeypress="MascaraCep(criarMembro.cep);" name="cep" type="text" maxlength="9" required>
 						</div>
 						<div class="form-group">
 							<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
@@ -90,10 +96,10 @@ if(isset($_POST['nome'])) {
 		</div><!-- /.col-->
 		
 	</div><!-- /.row -->	
-	
 
 <script src="js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/validaCampos.js"></script>
 </body>
 </html>

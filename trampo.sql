@@ -16,19 +16,6 @@ CREATE SCHEMA IF NOT EXISTS `trampo` DEFAULT CHARACTER SET utf8 ;
 USE `trampo` ;
 
 -- -----------------------------------------------------
--- Table `trampo`.`bairro`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampo`.`bairro` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `codigo` CHAR(10) NOT NULL,
-  `nome` VARCHAR(255) NOT NULL,
-  `uf` CHAR(2) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `trampo`.`categoria`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trampo`.`categoria` (
@@ -49,37 +36,10 @@ CREATE TABLE IF NOT EXISTS `trampo`.`conta` (
   `email` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
   `celular` VARCHAR(11) NOT NULL,
-  `bairro_id` INT(11) NOT NULL,
+  `cep` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `trampo`.`estado`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampo`.`estado` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `codigouf` INT(11) NOT NULL,
-  `nome` VARCHAR(50) NOT NULL,
-  `uf` CHAR(2) NOT NULL,
-  `regiao` INT(11) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `trampo`.`municipio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampo`.`municipio` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `codigo` INT(11) NOT NULL,
-  `nome` VARCHAR(255) NOT NULL,
-  `uf` CHAR(2) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -93,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `trampo`.`publicacao` (
   `titulo` VARCHAR(45) NOT NULL,
   `descricao` TEXT NOT NULL,
   `status` TINYINT(3) UNSIGNED NOT NULL DEFAULT 0,
+  `nota` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_publicacao_categoria1_idx` (`categoria_id` ASC),
   INDEX `fk_publicacao_conta1_idx` (`conta_id` ASC),
@@ -117,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `trampo`.`respostas` (
   `conta_id` INT(10) UNSIGNED NOT NULL,
   `publicacao_id` INT(10) UNSIGNED NOT NULL,
   `visualizado` TINYINT NOT NULL DEFAULT 0,
+  `nota` INT(10) NULL,
   PRIMARY KEY (`conta_id`, `publicacao_id`),
   INDEX `fk_conta_has_publicacao1_publicacao1_idx` (`publicacao_id` ASC),
   INDEX `fk_conta_has_publicacao1_conta1_idx` (`conta_id` ASC),
@@ -131,36 +93,6 @@ CREATE TABLE IF NOT EXISTS `trampo`.`respostas` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `trampo`.`recomendacao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampo`.`recomendacao` (
-  `publicacao_id` INT(10) UNSIGNED NOT NULL,
-  `conta_id` INT(10) UNSIGNED NOT NULL,
-  `nota` INT(10) UNSIGNED NOT NULL,
-  `tipo` TINYINT(3) UNSIGNED NOT NULL,
-  INDEX `fk_recomendacao_respostas1_idx` (`conta_id` ASC, `publicacao_id` ASC),
-  PRIMARY KEY (`publicacao_id`),
-  CONSTRAINT `fk_recomendacao_respostas1`
-    FOREIGN KEY (`conta_id` , `publicacao_id`)
-    REFERENCES `trampo`.`respostas` (`conta_id` , `publicacao_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `trampo`.`regiao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trampo`.`regiao` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8;
 
 

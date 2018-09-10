@@ -10,7 +10,7 @@ class Conta {
     private $email;
     private $senha;
     private $celular;
-    private $bairro_id;
+    private $cep
 
      public function __construct() {
         $database = new Database();
@@ -53,8 +53,8 @@ class Conta {
         return 1;
     }
 
-    public function setBairro_id($bairro_id) {
-        $this->bairro_id = $bairro_id;
+    public function setCep($cep) {
+        $this->cep = $cep
         return 1;
     }
 
@@ -65,14 +65,14 @@ class Conta {
     }
 
     public function insert(){
-        $query = "INSERT INTO conta(nome, sobrenome, email, senha, celular, bairro_id) VALUES (:nome, :sobrenome, :email, :senha, :celular, :bairro_id)";
+        $query = "INSERT INTO conta(nome, sobrenome, email, senha, celular, cep) VALUES (:nome, :sobrenome, :email, :senha, :celular, :cep)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":nome", $this->nome);
         $stmt->bindParam(":sobrenome", $this->sobrenome);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":senha", $this->senha);
         $stmt->bindParam(":celular", $this->celular);
-        $stmt->bindParam(":bairro_id", $this->bairro_id);
+        $stmt->bindParam(":cep", $this->cep);
         try { 
             $stmt->execute();
             return 1;
@@ -83,13 +83,13 @@ class Conta {
     }
 
     public function edit(){
-        $query = "UPDATE `conta` SET `email` = :email, `senha` = :senha, `celular` = :celular, `bairro_id` = :bairro_id WHERE `id` = :id ;";
+        $query = "UPDATE `conta` SET `email` = :email, `senha` = :senha, `celular` = :celular, `cep` = :cep WHERE `id` = :id ;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":senha", $this->senha);
         $stmt->bindParam(":celular", $this->celular);
-        $stmt->bindParam(":bairro_id", $this->bairro_id);
+        $stmt->bindParam(":cep", $this->cep);
         try { 
             $stmt->execute();
             return 1;
