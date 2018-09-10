@@ -33,9 +33,11 @@ if(isset($_POST['cria'])) {
 						<label>Categoria</label>
 						<select name="categoria" class="form-control"  required>
 							<?php
+							$catOutros = $conta->viewOutros();
 							for($i=0;$i<sizeof($cat);$i++) { ?>
 								<option value="<?php echo $cat[$i]->id ?>"><?php echo $cat[$i]->nome; ?></option>
 							<?php }?>
+							<option value="<?php echo $catOutros->id ?>"><?php echo $catOutros->nome; ?></option>
 						</select>
 					</div>
 					<div class="col-md-12 form-group">

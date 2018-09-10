@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `trampo`.`conta` (
   `email` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
   `celular` VARCHAR(11) NOT NULL,
-  `cep` INT(11) NOT NULL,
+  `cep` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB

@@ -2,26 +2,29 @@
 include_once('php/conta.php');
 
 $conta = new Conta();
-session_start();
-if (isset($_SESSION)) {
-	session_unset();
-	session_destroy();
-}
 
 if(isset($_POST['nome'])) {
 	$conta->setNome($_POST["nome"]);
 	$conta->setSobrenome($_POST["sobrenome"]);
 	$conta->setEmail($_POST["email"]);
-	$conta->setCelular($_POST["celular"]);
+	$celular = str_replace("-", "", $_POST['celular']);
+	$celular = str_replace("(", "", $celular);
+	$celular = str_replace(")", "", $_POST['celular']);
+	$conta->setCelular($celular);
 	$conta->setSenha(sha1($_POST["senha"]));
 	$cep = str_replace("-", "", $_POST['cep']);
+	
 	// set feed URL
 	$url = 'https://api.postmon.com.br/v1/cep/'.$cep.'?format=xml';
 
-	$sxml = simplexml_load_file($url)
+	$sxml = simplexml_load_file($url);
+
+	if(!is_null($sxml->bairro)) {
+		$conta->setCep($cep);
+	}
+
 	// then you can do
 	var_dump($sxml);
-
 	if ($conta->estaCadastrado($_POST['celular'], $_POST['email'])) {
 		$cadastrado = -2;
 	}else if ($conta->estaCadastradoCelular($_POST['celular'])) {
@@ -33,13 +36,19 @@ if(isset($_POST['nome'])) {
 		$conta->insert();
 		$uid = $conta->existe($_POST['email'], sha1($_POST['senha']));
 		if (!is_null($uid)) {
-			session_start();
 			$_SESSION["id"] = $uid;
 			header("Location: perfil.php");
 		}
 		header('Location: perfil.php');
 	}
 }
+
+session_start();
+if (isset($_SESSION)) {
+	session_unset();
+	session_destroy();
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -61,7 +70,7 @@ if(isset($_POST['nome'])) {
 			<div class="panel panel-default">
 				<div class="panel-heading">Cadastro</div>
 				<div class="panel-body">
-					<form role="form" name="criarMembro" action="teste.php" method="post">
+					<form role="form" name="criarMembro" action="formularioCadastra.php" method="post">
 						<?php if(isset($cadastrado) && $cadastrado!=1) {?>
 							<div class="col-md-12">
 								<div class="panel">

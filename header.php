@@ -73,11 +73,15 @@ $countRespostas = $conta->countRespostas();
 					<li>
 						<?php
 						$cat = $conta->viewCategorias();
+						$catOutros = $conta->viewOutros();
 						for($i=0;$i<sizeof($cat);$i++) { ?>
 							<a class="" href="publicacoes.php?catid=<?php echo $cat[$i]->id ?>">
 							<span class="fa fa-arrow-right">&nbsp;</span> <?= $cat[$i]->nome; ?>
 							</a>
 						<?php } ?>
+						<a class="" href="publicacoes.php?catid=<?php echo $catOutros->id ?>">
+						<span class="fa fa-arrow-right">&nbsp;</span> <?= $catOutros->nome; ?>
+						</a>
 					</li>
 				</ul>
 			</li>
