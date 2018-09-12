@@ -237,8 +237,21 @@ class Conta {
         }
     }
 
+    public function viewMeusServPrestados($id) {
+        $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `publicacao`.`id` IN (SELECT publicacao_id FROM respostas WHERE respostas.conta_id = :id AND nota IS NOT NULL) AND `publicacao`.`categoria_id` = `categoria`.`id`;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
     public function viewServPrestados($id) {
-        $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `publicacao`.`id` = (SELECT publicacao_id FROM publicacao p JOIN respostas WHERE respostas.conta_id = :id AND p.id = publicacao_id) AND `publicacao`.`categoria_id` = `categoria`.`id`;";
+        $query = "SELECT * FROM `publicacao` WHERE `publicacao`.`id` IN (SELECT publicacao_id FROM respostas WHERE respostas.conta_id = :id AND nota IS NOT NULL);";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         try {
@@ -355,21 +368,8 @@ class Conta {
         }
     }
 
-    public function viewPublicacoes($id) {
-        $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria WHERE categoria_id = :id AND categoria.id = :id ;";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
-        try {
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return null;
-        }
-    }
-
     public function viewPublicacoesArea($id, $area) {
-        $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria JOIN conta WHERE categoria_id = :id AND categoria.id = :id AND conta.id = publicacao.conta_id AND conta.cep LIKE :area;";
+        $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria JOIN conta WHERE categoria_id = :id AND categoria.id = :id AND conta.id = publicacao.conta_id AND conta.cep LIKE :area AND (SELECT count(visualizado) FROM respostas WHERE publicacao_id = :id AND visualizado = 2) > 0;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":area", $area);
@@ -383,9 +383,48 @@ class Conta {
     }
 
     public function viewRespostas($id) {
-        $query = "SELECT * FROM `respostas` JOIN conta WHERE publicacao_id = :id AND conta_id = conta.id;";
+        $query = "SELECT * FROM `respostas` JOIN `conta` WHERE publicacao_id = :id AND conta_id = conta.id;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function viewRespostasNLidas($id) {
+        $query = "SELECT * FROM `respostas` JOIN `conta` WHERE publicacao_id = :id AND conta_id = conta.id AND respostas.visualizado = 0;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function lerRespostas($id) {
+        $query = "UPDATE respostas SET visualizado = 1 WHERE publicacao_id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function viewRespostasGerais() {
+        $query = "SELECT DISTINCT publicacao.id, publicacao.titulo FROM `respostas` JOIN publicacao WHERE publicacao.conta_id = :id AND (SELECT COUNT(*) FROM respostas WHERE publicacao_id = publicacao.id AND respostas.visualizado = 0) > 0;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $this->id);
         try {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -464,14 +503,59 @@ class Conta {
         }
     }
 
-    public function resolve($id, $cid) {
-        $query = "UPDATE respostas WHERE publicacao_id = :id AND conta_id = :cid SET visualizado = 2;";
+    public function respondido($id) {
+        $query = "SELECT count(*) AS c FROM respostas WHERE publicacao_id = :id AND visualizado = 2;";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":cid", $cid);
         $stmt->bindParam(":id", $id);
         try {
             $stmt->execute();
-            return !empty($stmt->fetch(PDO::FETCH_OBJ));
+            return $stmt->fetch(PDO::FETCH_OBJ)->c >= 1;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function resolve($id, $cid, $nota) {
+        $query = "UPDATE respostas SET visualizado = 2, nota = :nota WHERE publicacao_id = :id AND conta_id = :cid;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":cid", $cid);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":nota", $nota);
+        try {
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function clienteDe($id) {
+        $query = "SELECT publicacao_id FROM respostas JOIN publicacao WHERE publicacao.conta_id = :id AND publicacao_id = publicacao.id AND visualizado = 2;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+            if(empty($result))
+                return 0;
+            else
+                return $result[0]->publicacao_id;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function resolveCliente($pid, $nota) {
+        $query = "UPDATE publicacao SET nota = :nota WHERE publicacao.id = :pid;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":pid", $pid);
+        $stmt->bindParam(":nota", $nota);
+        try {
+            $stmt->execute();
+            return 1;
         } catch (PDOException $e) {
             echo $e->getMessage();
             return null;

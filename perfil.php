@@ -1,15 +1,25 @@
 <?php 
 include_once('header.php');
 
-if(isset($_GET['id']) && $conta->exists($_GET['id'])) {
-	$a = $conta->viewPerfil($_GET['id']);
-	$p = $conta->viewServPrestados($_GET['id']);
-	$s = $conta->viewServSolicitados($_GET['id']);
+$contaX = new Conta();
+
+$recomendo = 0;
+
+if(isset($_GET['id']) && $conta->exists($_GET['id']) && $_GET['id'] != $_SESSION['id']) {
+	$contaX->setId($_GET['id']);
+	$a = $contaX->viewPerfil($_GET['id']);
+	$p = $contaX->viewMeusServPrestados($_GET['id']);
+	$s = $contaX->viewServSolicitados($_GET['id']);
 	$meuPerfil = 0;
+	$recomendo = $conta->clienteDe($_GET['id']);
+	if(isset($_POST['nota'])) {
+		$conta->resolveCliente($recomendo, $_POST['nota']);
+	}
 } else {
-	$a = $conta->view();
-	$p = $conta->viewServPrestados($_SESSION['id']);
-	$s = $conta->viewServSolicitados($_SESSION['id']);
+	$contaX->setId($_SESSION['id']);
+	$a = $contaX->view();
+	$p = $contaX->viewMeusServPrestados($_SESSION['id']);
+	$s = $contaX->viewServSolicitados($_SESSION['id']);
 	$meuPerfil = 1;
 }
 ?>		
@@ -43,21 +53,44 @@ if(isset($_GET['id']) && $conta->exists($_GET['id'])) {
 								</div>
 							</div>
 						<?php } ?>
-						<div class="col-md-6">
+						<div class="col-md-<?= $meuPerfil?'6':$recomendo?'6':'12' ?>">
 							<label>Nome</label>
 							<p><?php echo $a->nome . " " .  $a->sobrenome ?></p>
 						</div>
+						<?php if($meuPerfil) { ?>
 						<div class="col-md-6">
 							<label>E-mail</label>
 							<p><?php echo $a->email ?></p>
 						</div>
+						<?php }
+						else if($recomendo) { 
+						$nota = $conta->viewPublicacao($recomendo)->nota; ?>
+						<div class="col-md-6">
+							<label>Nota como cliente</label>
+							<form role="form" method="post" name="nota" action="perfil.php?id=<?= $_GET['id'] ?>">
+								<select name="nota" class="form-control" onchange="this.form.submit()">
+									<option value='0'<?= $nota==0?'selected':'' ?>>0</option>
+									<option value='1'<?= $nota==1?'selected':'' ?>>1</option>
+									<option value='2'<?= $nota==2?'selected':'' ?>>2</option>
+									<option value='3'<?= $nota==3?'selected':'' ?>>3</option>
+									<option value='4'<?= $nota==4?'selected':'' ?>>4</option>
+									<option value='5'<?= $nota==5?'selected':'' ?>>5</option>
+									<option value='6'<?= $nota==6?'selected':'' ?>>6</option>
+									<option value='7'<?= $nota==7?'selected':'' ?>>7</option>
+									<option value='8'<?= $nota==8?'selected':'' ?>>8</option>
+									<option value='9'<?= $nota==9?'selected':'' ?>>9</option>
+									<option value='10'<?= $nota==10?'selected':'' ?>>10</option>
+								</select>
+							</form>
+						</div>
+						<?php } ?>
 						<div class="col-md-6">
 							<label>Recomendações como prestador</label>
 							<p><?php echo sizeof($p) ?></p>
 						</div>
 						<div class="col-md-6">
 							<label>Recomendações como contratante</label>
-							<p><?php echo $conta->viewNotasContratante()->n ?></p>
+							<p><?php echo $contaX->viewNotasContratante()->n ?></p>
 						</div>
 						<?php if($meuPerfil) { ?>
 						<div class="col-md-6">
@@ -81,17 +114,17 @@ if(isset($_GET['id']) && $conta->exists($_GET['id'])) {
 							<label>Médias</label>
 							<div class="row progress-labels">
 								<div class="col-sm-6">Como prestador</div>
-								<div class="col-sm-6" style="text-align: right;"><?php echo $conta->viewRecomendacoesPrestador()->n*10 ?>%</div>
+								<div class="col-sm-6" style="text-align: right;"><?php echo $contaX->viewRecomendacoesPrestador()->n*10 ?>%</div>
 							</div>
 							<div class="progress">
-								<div data-percentage="0%" style="width: <?php echo $conta->viewRecomendacoesPrestador()->n*10 ?>%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div data-percentage="0%" style="width: <?php echo $contaX->viewRecomendacoesPrestador()->n*10 ?>%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 							<div class="row progress-labels">
 								<div class="col-sm-6">Como contratante</div>
-								<div class="col-sm-6" style="text-align: right;"><?php echo $conta->viewRecomendacoesContratante()->n*10 ?>%</div>
+								<div class="col-sm-6" style="text-align: right;"><?php echo $contaX->viewRecomendacoesContratante()->n*10 ?>%</div>
 							</div>
 							<div class="progress">
-								<div data-percentage="0%" style="width: <?php echo $conta->viewRecomendacoesContratante()->n*10 ?>%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div data-percentage="0%" style="width: <?php echo $contaX->viewRecomendacoesContratante()->n*10 ?>%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 						</div>
 					</div>

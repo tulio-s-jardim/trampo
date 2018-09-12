@@ -16,23 +16,59 @@ include_once('header.php');
 				<h1 class="page-header">Respostas às minhas publicações</h1>
 			</div>
 		</div><!--/.row-->
+		<?php 
+		$rg = $conta->viewRespostasGerais();
+		for($j=0;$j<sizeof($rg);$j++) { ?>
 		<div class="panel panel-default articles">
 			<div class="panel-heading">
-				Serviços Solicitados
+				<h4><a href="publicacao.php?id=<?php echo $rg[$j]->id ?>"><?= $rg[$j]->titulo ?></a></h4>
 				<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
 			<div class="panel-body articles-container">
-				<?php
-				for($i=0;$i<sizeof($s);$i++) { ?>
 				<div class="article border-bottom">
 					<div class="col-xs-12">
 						<div class="row">
 							<div class="col-xs-2 col-md-2 date">
-								<div class="large"><?php echo $s[$i]->nome ?></div>
-								<div class="text-muted">Categoria</div>
+								<h4><b>Nome</b></h4>
 							</div>
-							<div class="col-xs-10 col-md-10">
-								<h4><a href="publicacao.php?id=<?php echo $s[$i]->pubid ?>"><?php echo $s[$i]->titulo ?></a></h4>
-								<p><?php $out = strlen($s[$i]->descricao) > 255 ? substr($s[$i]->descricao,0,255)."..." : $s[$i]->descricao; echo $out ?></p>
+							<div class="col-xs-3 col-md-3 date">
+								<h4><b>E-mail</b></h4>
+							</div>
+							<div class="col-xs-2 col-md-2 date">
+								<h4><b>Serviços Prestados</b></h4>
+							</div>
+							<div class="col-xs-1 col-md-1 date">
+								<h4><b>Média</b></h4>
+							</div>
+							<div class="col-xs-4 col-md-4 date">
+								<h4><b>Número de Celular</b></h4>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div><!--End .article-->
+				<?php
+				$r = $conta->viewRespostasNLidas($rg[$j]->id);
+				for($i=0;$i<sizeof($r);$i++) { 
+					$contaX = new Conta();
+					$contaX->setId($r[$i]->id);
+					$pX = $contaX->viewServPrestados($r[$i]->id);?>
+				<div class="article border-bottom">
+					<div class="col-xs-12">
+						<div class="row">
+							<div class="col-xs-2 col-md-2 date">
+								<h4><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></h4>
+							</div>
+							<div class="col-xs-3 col-md-3 date">
+								<h4><?php echo $r[$i]->email ?></h4>
+							</div>
+							<div class="col-xs-2 col-md-2 date">
+								<h4><?php echo sizeof($pX) ?></h4>
+							</div>
+							<div class="col-xs-1 col-md-1 date">
+								<h4><?php echo $contaX->viewRecomendacoesPrestador()->n*10 . '%' ?></h4>
+							</div>
+							<div class="col-xs-4 col-md-4 date">
+								<h4><a href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($rg[$j]->titulo) ?>%22."><?php echo $r[$i]->celular ?></a></h4>
 							</div>
 						</div>
 					</div>
@@ -41,6 +77,8 @@ include_once('header.php');
 				<?php } ?>
 			</div>
 		</div><!--End .articles-->
+		<?php 
+		$conta->lerRespostas($rg[$j]->id); } ?>
 
 			<div class="col-sm-12">
 				<p class="back-link">Trampo possui sua base em <a href="https://www.medialoot.com">Lumino</a></p>

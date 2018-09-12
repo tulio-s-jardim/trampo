@@ -7,7 +7,7 @@
 		if(sha1($_POST['senha_atual'] == $c->senha)){
 			$conta->setEmail($_POST['email']);
 			$conta->setCelular($_POST['celular']);
-			$conta->setBairro_id($_POST['bairro']);
+			$conta->setCep($_POST['cep']);
 			if($_POST['senha_nova'] == $_POST['senha_confirmar']){
 				$conta->setSenha(sha1($_POST['senha_nova']));
 				$conta->edit();
@@ -55,22 +55,28 @@
 							<?php }
 						?>
 						<div class="form-group">
+							<label>E-mail</label>
 							<input class="form-control" name="email" type="email" autofocus="" value="<?= $c->email?>" required>
 						</div>
 						<div class="form-group">
+							<label>Celular</label>
 							<input class="form-control" name="celular" type="number" autofocus="" value="<?= $c->celular ?>" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" name="bairro" type="text" autofocus="" value="<?= $c->bairro_id ?>" required>
+							<label>CEP</label>
+							<input class="form-control" name="cep" type="text" autofocus="" value="<?= $c->cep ?>" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Senha atual" name="senha_atual" type="password" required>
+							<label>Senha atual</label>
+							<input class="form-control" name="senha_atual" type="password" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Nova senha" name="senha_nova" type="password">
+							<label>Nova senha</label>
+							<input class="form-control" name="senha_nova" type="password">
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Confirmar nova senha" name="senha_confirmar" type="password">
+							<label>Confirmar nova senha</label>
+							<input class="form-control" name="senha_confirmar" type="password">
 						</div>
 						<button class="btn btn-primary cadastra" type="submit" name="alterar" required>Alterar</button>
 					</form>

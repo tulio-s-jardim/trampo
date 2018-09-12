@@ -47,14 +47,16 @@ if(isset($_POST['responde'])) {
 				</div>
 				<div class="col-md-6 justify-content-md-center">
 					<form role="form" action="publicacao.php?id=<?= $_GET['id']; ?>" method="post">
-						<?php if(!$conta->respondi($_GET['id'], $_SESSION['id'])) { ?>
-						<button name="responde" class="btn-primary btn btn-md" type="submit">Responder Publicação</button>
+						<?php if($conta->respondido($_GET['id'])) { ?>
+						<button name="responde" class="btn-primary btn btn-md" disabled>Publicação concluída</button>
+						<?php } else if(!$conta->respondi($_GET['id'], $_SESSION['id'])) { ?>
+						<button name="responde" class="btn-primary btn btn-md" type="submit">Manifestar interesse</button>
 						<?php } else { ?>
-						<button name="excluir" class="btn-primary btn btn-md" type="submit">Excluir minha resposta</button>
+						<button name="excluir" class="btn-primary btn btn-md" type="submit">Retirar interesse</button>
 						<?php }?>
 					</form>
 				</div>
-				<?php if($p->status != 0) {
+				<?php if($conta->respondido($_GET['id'])) {
 					$cp = $conta->viewPublicacaoCompleta($_GET['id']); ?>
 				<div class="col-md-6 justify-content-md-center">
 					<p>Completo por <?= '<a href="perfil.php?id='.$cp->id.'">'.$cp->nome.' '.$cp->sobrenome.'</a>' ?></p>
@@ -63,7 +65,7 @@ if(isset($_POST['responde'])) {
 			</div>
 		</div><!-- /.panel-->
 		
-		<?php if(sizeof($r) > 0 && $p->conta_id == $_SESSION['id']) { ?>
+		<?php if(!$conta->respondido($_GET['id']) && sizeof($r) > 0 && $p->conta_id == $_SESSION['id']) { ?>
 		<div class="panel panel-default articles">
 			<div class="panel-heading">
 				Quem topa o serviço
@@ -72,14 +74,17 @@ if(isset($_POST['responde'])) {
 				<div class="article border-bottom">
 					<div class="col-xs-12">
 						<div class="row">
-							<div class="col-xs-4 col-md-4 date">
+							<div class="col-xs-2 col-md-2 date">
 								<h4><b>Nome</b></h4>
+							</div>
+							<div class="col-xs-3 col-md-3 date">
+								<h4><b>E-mail</b></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
 								<h4><b>Serviços Prestados</b></h4>
 							</div>
-							<div class="col-xs-2 col-md-2 date">
-								<h4><b>Média como Prestador</b></h4>
+							<div class="col-xs-1 col-md-1 date">
+								<h4><b>Média</b></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
 								<h4><b>Número de Celular</b></h4>
@@ -99,14 +104,17 @@ if(isset($_POST['responde'])) {
 				<div class="article border-bottom">
 					<div class="col-xs-12">
 						<div class="row">
-							<div class="col-xs-4 col-md-4 date">
-								<h4><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome . " " . $r[$i]->sobrenome  ?></a></h4>
+							<div class="col-xs-2 col-md-2 date">
+								<h4><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></h4>
+							</div>
+							<div class="col-xs-3 col-md-3 date">
+								<h4><?php echo $r[$i]->email ?></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
 								<h4><?php echo sizeof($pX) ?></h4>
 							</div>
-							<div class="col-xs-2 col-md-2 date">
-								<h4><?php echo $contaX->viewRecomendacoesPrestador()->n*10 ?></h4>
+							<div class="col-xs-1 col-md-1 date">
+								<h4><?php echo $contaX->viewRecomendacoesPrestador()->n*10 . '%' ?></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
 								<h4><a href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($p->titulo) ?>%22."><?php echo $r[$i]->celular ?></a></h4>

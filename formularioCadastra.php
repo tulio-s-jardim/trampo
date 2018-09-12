@@ -9,7 +9,8 @@ if(isset($_POST['nome'])) {
 	$conta->setEmail($_POST["email"]);
 	$celular = str_replace("-", "", $_POST['celular']);
 	$celular = str_replace("(", "", $celular);
-	$celular = str_replace(")", "", $_POST['celular']);
+	$celular = str_replace(")", "", $celular);
+	$celular = str_replace(" ", "", $celular);
 	$conta->setCelular($celular);
 	$conta->setSenha(sha1($_POST["senha"]));
 	$cep = str_replace("-", "", $_POST['cep']);
@@ -37,7 +38,7 @@ if(isset($_POST['nome'])) {
 		$uid = $conta->existe($_POST['email'], sha1($_POST['senha']));
 		if (!is_null($uid)) {
 			$_SESSION["id"] = $uid;
-			header("Location: perfil.php");
+			header('Location: perfil.php');
 		}
 		header('Location: perfil.php');
 	}
@@ -59,6 +60,7 @@ if (isset($_SESSION)) {
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
+	<link rel="icon" type="image/png" href="img/favicon.png" />
 	<!--[if lt IE 9]>
 	<script src="js/html5shiv.js"></script>
 	<script src="js/respond.min.js"></script>
@@ -81,22 +83,28 @@ if (isset($_SESSION)) {
 							</div>
 						<?php } ?>
 						<div class="form-group">
-							<input class="form-control" placeholder="Nome" name="nome" type="text" autofocus="" required>
+							<label>Nome</label>
+							<input class="form-control" name="nome" type="text" autofocus="" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Sobrenome" name="sobrenome" type="text"required>
+							<label>Sobrenome</label>
+							<input class="form-control" name="sobrenome" type="text"required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="E-mail" name="email" type="email"" required>
+							<label>E-mail</label>
+							<input class="form-control" name="email" type="email"" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Celular" name="celular" type="text" onkeypress="MascaraCelular(criarMembro.celular, 'celular');" id="celular" maxlength="18" required>
+							<label>Celular</label>
+							<input class="form-control" placeholder="(XX) X-XXXX-XXXX" name="celular" type="text" onkeypress="MascaraCelular(criarMembro.celular, 'celular');" id="celular" maxlength="16" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Cep" onkeypress="MascaraCep(criarMembro.cep);" name="cep" type="text" maxlength="9" required>
+							<label>CEP</label>
+							<input class="form-control" placeholder="XXXXX-XXX" onkeypress="MascaraCep(criarMembro.cep);" name="cep" type="text" maxlength="9" required>
 						</div>
 						<div class="form-group">
-							<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
+							<label>Senha</label>
+							<input class="form-control" name="senha" type="password" value="" required>
 						</div>
 						<button class="btn btn-primary cadastra" type="submit" required>Cadastrar</button>
 					</form>
