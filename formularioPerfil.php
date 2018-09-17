@@ -4,10 +4,22 @@
 	$flag = 0;
 
 	if(isset($_POST['senha_atual']) && isset($_POST['senha_nova']) && isset($_POST['senha_confirmar'])){
-		if(sha1($_POST['senha_atual'] == $c->senha)){
-			$conta->setEmail($_POST['email']);
-			$conta->setCelular($_POST['celular']);
-			$conta->setCep($_POST['cep']);
+		if(sha1($_POST['senha_atual']) == $c->senha){
+			$conta->setEmail($_POST['email']);$celular = str_replace("-", "", $_POST['celular']);
+			$celular = str_replace("(", "", $celular);
+			$celular = str_replace(")", "", $celular);
+			$celular = str_replace(" ", "", $celular);
+			$conta->setCelular($celular);
+			$cep = str_replace("-", "", $_POST['cep']);
+			
+			// set feed URL
+			$url = 'https://api.postmon.com.br/v1/cep/'.$cep.'?format=xml';
+
+			$sxml = simplexml_load_file($url);
+
+			if(!is_null($sxml->bairro)) {
+				$conta->setCep($cep);
+			}
 			if($_POST['senha_nova'] == $_POST['senha_confirmar']){
 				$conta->setSenha(sha1($_POST['senha_nova']));
 				$conta->edit();
@@ -60,11 +72,11 @@
 						</div>
 						<div class="form-group">
 							<label>Celular</label>
-							<input class="form-control" name="celular" type="number" autofocus="" value="<?= $c->celular ?>" required>
+							<input class="form-control" placeholder="(XX) X-XXXX-XXXX" name="celular" type="text" onkeypress="MascaraCelular(criarMembro.celular, 'celular');" id="celular" maxlength="16" value="<?= $c->celular ?>" required>
 						</div>
 						<div class="form-group">
 							<label>CEP</label>
-							<input class="form-control" name="cep" type="text" autofocus="" value="<?= $c->cep ?>" required>
+							<input class="form-control" placeholder="XXXXX-XXX" onkeypress="MascaraCep(criarMembro.cep);" name="cep" type="text" maxlength="9" value="<?= $c->cep ?>" required>
 						</div>
 						<div class="form-group">
 							<label>Senha atual</label>
@@ -97,6 +109,8 @@
 	<script src="js/easypiechart.js"></script>
 	<script src="js/easypiechart-data.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/custom.js"></script>		
+	<script src="js/custom.js"></script>
+	<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+	<script src="js/validaCampos.js"></script>
 </body>
 </html>

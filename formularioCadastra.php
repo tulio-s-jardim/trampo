@@ -23,9 +23,6 @@ if(isset($_POST['nome'])) {
 	if(!is_null($sxml->bairro)) {
 		$conta->setCep($cep);
 	}
-
-	// then you can do
-	var_dump($sxml);
 	if ($conta->estaCadastrado($_POST['celular'], $_POST['email'])) {
 		$cadastrado = -2;
 	}else if ($conta->estaCadastradoCelular($_POST['celular'])) {

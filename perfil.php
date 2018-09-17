@@ -183,6 +183,9 @@ if(isset($_GET['id']) && $conta->exists($_GET['id']) && $_GET['id'] != $_SESSION
 		</div><!--End .articles-->
 
 			<div class="col-sm-12">
+				<?php if(!$meuPerfil) { ?>
+				<p class="back-link">Deseja denunciar esse perfil? Basta enviar um e-mail para denuncias@trampo.com.br com o seu problema</p>
+				<?php } ?>
 				<p class="back-link">Trampo possui sua base em <a href="https://www.medialoot.com">Lumino</a></p>
 			</div>
 		</div><!--/.row-->

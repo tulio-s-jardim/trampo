@@ -1082,7 +1082,7 @@ select.form-control {
 #cadastra-index{
   font-size: 125%;
   color: #444;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .div-cadastra-index{

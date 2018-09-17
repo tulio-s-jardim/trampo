@@ -238,7 +238,7 @@ class Conta {
     }
 
     public function viewMeusServPrestados($id) {
-        $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `publicacao`.`id` IN (SELECT publicacao_id FROM respostas WHERE respostas.conta_id = :id AND nota IS NOT NULL) AND `publicacao`.`categoria_id` = `categoria`.`id`;";
+        $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `publicacao`.`id` IN (SELECT publicacao_id FROM respostas WHERE respostas.conta_id = :id AND nota IS NOT NULL) AND `publicacao`.`categoria_id` = `categoria`.`id` ORDER BY publicacao.id DESC;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         try {
@@ -251,7 +251,7 @@ class Conta {
     }
 
     public function viewServPrestados($id) {
-        $query = "SELECT * FROM `publicacao` WHERE `publicacao`.`id` IN (SELECT publicacao_id FROM respostas WHERE respostas.conta_id = :id AND nota IS NOT NULL);";
+        $query = "SELECT * FROM `publicacao` WHERE `publicacao`.`id` IN (SELECT publicacao_id FROM respostas WHERE respostas.conta_id = :id AND nota IS NOT NULL) ORDER BY publicacao.id DESC;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         try {
@@ -277,7 +277,7 @@ class Conta {
     }
 
     public function viewServSolicitados($id) {
-        $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `conta_id` = :id AND `publicacao`.`categoria_id` = `categoria`.`id`;";
+        $query = "SELECT *, publicacao.id AS pubid FROM `publicacao` JOIN `categoria` WHERE `conta_id` = :id AND `publicacao`.`categoria_id` = `categoria`.`id` ORDER BY publicacao.id DESC;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         try {
@@ -369,7 +369,7 @@ class Conta {
     }
 
     public function viewPublicacoesArea($id, $area) {
-        $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria JOIN conta WHERE categoria_id = :id AND categoria.id = :id AND conta.id = publicacao.conta_id AND conta.cep LIKE :area AND (SELECT count(visualizado) FROM respostas WHERE publicacao_id = :id AND visualizado = 2) > 0;";
+        $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria JOIN conta WHERE categoria_id = :id AND categoria.id = :id AND conta.id = publicacao.conta_id AND conta.cep LIKE :area AND (SELECT count(visualizado) FROM respostas WHERE publicacao_id = :id AND visualizado = 2) > 0 ORDER BY publicacao.id DESC;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":area", $area);
@@ -422,7 +422,7 @@ class Conta {
     }
 
     public function viewRespostasGerais() {
-        $query = "SELECT DISTINCT publicacao.id, publicacao.titulo FROM `respostas` JOIN publicacao WHERE publicacao.conta_id = :id AND (SELECT COUNT(*) FROM respostas WHERE publicacao_id = publicacao.id AND respostas.visualizado = 0) > 0;";
+        $query = "SELECT DISTINCT publicacao.id, publicacao.titulo FROM `respostas` JOIN publicacao WHERE publicacao.conta_id = :id AND (SELECT COUNT(*) FROM respostas WHERE publicacao_id = publicacao.id AND respostas.visualizado = 0) > 0 ORDER BY publicacao.id DESC;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
         try {
@@ -532,9 +532,10 @@ class Conta {
     }
 
     public function clienteDe($id) {
-        $query = "SELECT publicacao_id FROM respostas JOIN publicacao WHERE publicacao.conta_id = :id AND publicacao_id = publicacao.id AND visualizado = 2;";
+        $query = "SELECT publicacao_id FROM respostas JOIN publicacao WHERE publicacao.conta_id = :id AND publicacao_id = publicacao.id AND visualizado = 2 AND respostas.conta_id = :uid;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":uid", $this->id);
         try {
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_OBJ);
