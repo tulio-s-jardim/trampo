@@ -33,7 +33,7 @@
 	<div class="container">
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>O que é "Trampo"?</b></h2>
-			<p class="index-texto"><b>"Trampo" é uma ferramenta para contratação e prestação de serviços de curta duração, criada com o objetivo de atenuar um dos maiores problemas do Brasil: o desemprego. Além de fornecer maior comodidade para quem a utiliza.</b></p>
+			<p class="index-texto"><b>"Trampo" é uma ferramenta para contratação e prestação de serviços de curta duração, criada com o objetivo de atenuar um dos maiores problemas do Brasil: o desemprego. Além disso, ela fornece maior comodidade para quem a utiliza.</b></p>
 		</div>
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>Como essa ferramenta funciona?</b></h2>
@@ -50,7 +50,7 @@
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>Ficou interessado? </b></h2>
 			<div class="div-cadastra-index">
-				<b>Cadastre-se <a href="formularioCadastra.php" id="cadastra-index">neste link</a></b>
+				<p class="index-texto"><b>Cadastre-se <a href="formularioCadastra.php" id="cadastra-index">neste link</a></b></p>
 			</div>
 		</div>
 	</div>
