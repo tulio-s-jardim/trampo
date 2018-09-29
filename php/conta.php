@@ -142,7 +142,7 @@ class Conta {
         }
     }
 
-    public function exists($id) {
+    public function existeID($id) {
         $query = "SELECT id FROM conta WHERE id = :id ;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);

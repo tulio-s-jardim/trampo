@@ -5,7 +5,7 @@ $conta = new Conta();
 
 session_start();
 $conta->setId($_SESSION['id']);
-if (!$conta->exists($_SESSION['id'])) {
+if (!$conta->existeID($_SESSION['id'])) {
     header('Location: index.php');
 }
 $c = $conta->view();

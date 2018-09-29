@@ -5,7 +5,7 @@ $contaX = new Conta();
 
 $recomendo = 0;
 
-if(isset($_GET['id']) && $conta->exists($_GET['id']) && $_GET['id'] != $_SESSION['id']) {
+if(isset($_GET['id']) && $conta->existeID($_GET['id']) && $_GET['id'] != $_SESSION['id']) {
 	$contaX->setId($_GET['id']);
 	$a = $contaX->viewPerfil($_GET['id']);
 	$p = $contaX->viewMeusServPrestados($_GET['id']);
