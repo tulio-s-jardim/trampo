@@ -39,7 +39,7 @@ $countRespostas = $conta->countRespostas();
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><img src="img/logo.png" class="img-responsive" alt="Trampo"></a>
+				<a class="navbar-brand" href="perfil.php"><img src="img/logo.png" class="img-responsive" alt="Trampo"></a>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 						<em class="fa fa-bell"></em><?php if($countRespostas > 0) { ?><span class="label label-info"><?= $countRespostas; ?></span><?php } ?>

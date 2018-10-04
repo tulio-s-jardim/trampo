@@ -503,6 +503,20 @@ class Conta {
         }
     }
 
+    public function naoContratante($id){
+        $query = "SELECT * FROM publicacao WHERE id = :id AND conta_id = :cid ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":cid", $this->id);
+        $stmt->bindParam(":id", $id);
+        try {
+            $stmt->execute();
+            return empty($stmt->fetch(PDO::FETCH_OBJ));
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
     public function respondido($id) {
         $query = "SELECT count(*) AS c FROM respostas WHERE publicacao_id = :id AND visualizado = 2;";
         $stmt = $this->conn->prepare($query);

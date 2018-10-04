@@ -49,11 +49,13 @@ if(isset($_POST['responde'])) {
 					<form role="form" action="publicacao.php?id=<?= $_GET['id']; ?>" method="post">
 						<?php if($conta->respondido($_GET['id'])) { ?>
 						<button name="responde" class="btn-primary btn btn-md" disabled>Publicação concluída</button>
-						<?php } else if(!$conta->respondi($_GET['id'], $_SESSION['id'])) { ?>
-						<button name="responde" class="btn-primary btn btn-md" type="submit">Manifestar interesse</button>
-						<?php } else { ?>
-						<button name="excluir" class="btn-primary btn btn-md" type="submit">Retirar interesse</button>
-						<?php }?>
+						<?php } else if($conta->naoContratante($_GET['id'], $_SESSION['id'])) { 
+									if(!$conta->respondi($_GET['id'], $_SESSION['id'])){  ?>
+									<button name="responde" class="btn-primary btn btn-md" type="submit">Manifestar interesse</button>
+									<?php } else { ?>
+									<button name="excluir" class="btn-primary btn btn-md" type="submit">Retirar interesse</button>
+									<?php }
+						} ?>
 					</form>
 				</div>
 				<?php if($conta->respondido($_GET['id'])) {
@@ -105,7 +107,8 @@ if(isset($_POST['responde'])) {
 					<div class="col-xs-12">
 						<div class="row">
 							<div class="col-xs-2 col-md-2 date">
-								<h4><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></h4>
+								<h4><?php echo $r[$i]->nome ?></h4>
+								<a class="btn btn-primary" href="perfil?id=<?= $r[$i]->id ?>">Ver perfil</a>
 							</div>
 							<div class="col-xs-3 col-md-3 date">
 								<h4><?php echo $r[$i]->email ?></h4>
@@ -117,7 +120,8 @@ if(isset($_POST['responde'])) {
 								<h4><?php echo $contaX->viewRecomendacoesPrestador()->n*10 . '%' ?></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
-								<h4><a href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($p->titulo) ?>%22."><?php echo $r[$i]->celular ?></a></h4>
+								<h4><?php echo $r[$i]->celular ?></a></h4>
+								<a class="btn btn-primary" href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($p->titulo) ?>%22.">Entrar em contato</a>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
 								<h4><a class="btn btn-primary" href="concluido?id=<?= $_GET['id'] ?>&conta=<?= $contaX->view()->id ?>">Sim</a></h4>
