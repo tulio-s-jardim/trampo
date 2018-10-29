@@ -32,8 +32,9 @@
 
 	<div class="container">
 		<div class="div-index">
-			<h2 class="subtitulo-index"><b>O que é "Trampo"?</b></h2>
-			<p class="index-texto"><b>"Trampo" é uma ferramenta para contratação e prestação de serviços de curta duração, criada com o objetivo de atenuar um dos maiores problemas do Brasil: o desemprego. Além disso, ela fornece maior comodidade para quem a utiliza.</b></p>
+			<h2 class="subtitulo-index"><b>O que é o "Trampo"?</b></h2>
+			<p class="index-texto"><b>O "Trampo" é uma ferramenta para contratação e prestação de serviços de curta duração, criada com o objetivo de trazer maior comodidade para quem 
+			deseja contratar um serviço rápido ou auxiliar pessoas empregadas ou desempregadas que desejam adquirir dinheiro com a prestação do seu serviço.</b></p>
 		</div>
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>Como essa ferramenta funciona?</b></h2>
@@ -45,7 +46,7 @@
 		</div>
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>Qual é o preço para se ter acesso à ferramenta?</b></h2>
-			<p class="index-texto"><b>A ferramenta é gratuita, ou em forma de jargão brasileiro: "de grátis".</b></p>
+			<p class="index-texto"><b>A ferramenta é gratuita.</b></p>
 		</div>
 		<div class="div-index">
 			<h2 class="subtitulo-index"><b>Ficou interessado? </b></h2>
