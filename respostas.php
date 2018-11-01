@@ -37,7 +37,7 @@ include_once('header.php');
 								<h4><b>Serviços Prestados</b></h4>
 							</div>
 							<div class="col-xs-1 col-md-1 date">
-								<h4><b>Média</b></h4>
+								<h4><b>Endereço</b></h4>
 							</div>
 							<div class="col-xs-4 col-md-4 date">
 								<h4><b>Número de Celular</b></h4>
@@ -65,7 +65,7 @@ include_once('header.php');
 								<h4><?php echo sizeof($pX) ?></h4>
 							</div>
 							<div class="col-xs-1 col-md-1 date">
-								<h4><?php echo $contaX->viewRecomendacoesPrestador()->n*10 . '%' ?></h4>
+								<h4><a href="<?php echo 'https://www.google.com/maps?q='.$r[$i]->cep ?>"><em class="fa fa-map-marked-alt">&nbsp;</em></a></h4>
 							</div>
 							<div class="col-xs-4 col-md-4 date">
 								<h4><a href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($rg[$j]->titulo) ?>%22."><?php echo $r[$i]->celular ?></a></h4>

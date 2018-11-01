@@ -86,7 +86,7 @@ if(isset($_POST['responde'])) {
 								<h4><b>Serviços Prestados</b></h4>
 							</div>
 							<div class="col-xs-1 col-md-1 date">
-								<h4><b>Média</b></h4>
+								<h4><b>Endereço</b></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
 								<h4><b>Número de Celular</b></h4>
@@ -107,8 +107,7 @@ if(isset($_POST['responde'])) {
 					<div class="col-xs-12">
 						<div class="row">
 							<div class="col-xs-2 col-md-2 date">
-								<h4><?php echo $r[$i]->nome ?></h4>
-								<a class="btn btn-primary" href="perfil?id=<?= $r[$i]->id ?>">Ver perfil</a>
+								<h4><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></h4>
 							</div>
 							<div class="col-xs-3 col-md-3 date">
 								<h4><?php echo $r[$i]->email ?></h4>
@@ -117,7 +116,7 @@ if(isset($_POST['responde'])) {
 								<h4><?php echo sizeof($pX) ?></h4>
 							</div>
 							<div class="col-xs-1 col-md-1 date">
-								<h4><?php echo $contaX->viewRecomendacoesPrestador()->n*10 . '%' ?></h4>
+								<h4><a href="<?php echo 'https://www.google.com/maps?q='.$r[$i]->cep ?>"><em class="fa fa-map-marked-alt">&nbsp;</em></a></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
 								<h4><?php echo $r[$i]->celular ?></a></h4>
