@@ -89,7 +89,7 @@ if(isset($_POST['responde'])) {
 								<h4><b>Endereço</b></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
-								<h4><b>Número de Celular</b></h4>
+								<h4><b>Contato</b></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
 								<h4><b>Contratado e Resolvido?</b></h4>
@@ -107,7 +107,7 @@ if(isset($_POST['responde'])) {
 					<div class="col-xs-12">
 						<div class="row">
 							<div class="col-xs-2 col-md-2 date">
-								<h4><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></h4>
+								<h4><u><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></u></h4>
 							</div>
 							<div class="col-xs-3 col-md-3 date">
 								<h4><?php echo $r[$i]->email ?></h4>
@@ -119,7 +119,6 @@ if(isset($_POST['responde'])) {
 								<h4><a href="<?php echo 'https://www.google.com/maps?q='.$r[$i]->cep ?>"><em class="fa fa-map-marked-alt">&nbsp;</em></a></h4>
 							</div>
 							<div class="col-xs-2 col-md-2 date">
-								<h4><?php echo $r[$i]->celular ?></a></h4>
 								<a class="btn btn-primary" href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($p->titulo) ?>%22.">Entrar em contato</a>
 							</div>
 							<div class="col-xs-2 col-md-2 date">

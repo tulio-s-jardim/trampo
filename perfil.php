@@ -146,7 +146,7 @@ if(isset($_GET['id']) && $conta->existeID($_GET['id']) && $_GET['id'] != $_SESSI
 								<div class="text-muted">Categoria</div>
 							</div>
 							<div class="col-xs-10 col-md-10">
-								<h4><a href="publicacao.php?id=<?php echo $p[$i]->pubid ?>"><?php echo $p[$i]->titulo ?></a></h4>
+								<h4><u><a href="publicacao.php?id=<?php echo $p[$i]->pubid ?>"><?php echo $p[$i]->titulo ?></a></u></h4>
 								<p><?php echo $p[$i]->descricao ?></p>
 							</div>
 						</div>
@@ -171,7 +171,7 @@ if(isset($_GET['id']) && $conta->existeID($_GET['id']) && $_GET['id'] != $_SESSI
 								<div class="text-muted">Categoria</div>
 							</div>
 							<div class="col-xs-10 col-md-10">
-								<h4><a href="publicacao.php?id=<?php echo $s[$i]->pubid ?>"><?php echo $s[$i]->titulo ?></a></h4>
+								<h4><u><a href="publicacao.php?id=<?php echo $s[$i]->pubid ?>"><?php echo $s[$i]->titulo ?></a></u></h4>
 								<p><?php $out = strlen($s[$i]->descricao) > 255 ? substr($s[$i]->descricao,0,255)."..." : $s[$i]->descricao; echo $out ?></p>
 							</div>
 						</div>
