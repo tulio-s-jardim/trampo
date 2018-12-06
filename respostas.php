@@ -56,7 +56,7 @@ include_once('header.php');
 					<div class="col-xs-12">
 						<div class="row">
 							<div class="col-xs-2 col-md-2 date">
-								<h4><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></h4>
+								<h4><u><a href="perfil?id=<?= $r[$i]->id ?>"><?php echo $r[$i]->nome ?></a></u></h4>
 							</div>
 							<div class="col-xs-3 col-md-3 date">
 								<h4><?php echo $r[$i]->email ?></h4>
@@ -68,7 +68,7 @@ include_once('header.php');
 								<h4><a href="<?php echo 'https://www.google.com/maps?q='.$r[$i]->cep ?>"><em class="fa fa-map-marked-alt">&nbsp;</em></a></h4>
 							</div>
 							<div class="col-xs-4 col-md-4 date">
-								<h4><a href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($rg[$j]->titulo) ?>%22."><?php echo $r[$i]->celular ?></a></h4>
+								<a class="btn btn-primary" href="https://wa.me/55<?php echo $r[$i]->celular ?>?text=Ol%C3%A1%2C%20vejo%20que%20voc%C3%AA%20respondeu%20%C3%A0%20minha%20publica%C3%A7%C3%A3o%20%22<?php echo $conta->myUrlEncode($rg[$j]->titulo) ?>%22.">Entrar em contato</a>
 							</div>
 						</div>
 					</div>

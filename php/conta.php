@@ -369,7 +369,7 @@ class Conta {
     }
 
     public function viewPublicacoesArea($id, $area) {
-        $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria JOIN conta WHERE categoria_id = :id AND categoria.id = :id AND nota is not null AND conta.id = publicacao.conta_id AND conta.cep LIKE :area AND (SELECT count(visualizado) FROM respostas WHERE publicacao_id = :id AND visualizado = 2) > 0 ORDER BY publicacao.id DESC;";
+        $query = "SELECT *, publicacao.id AS pid, categoria.id AS cid FROM `publicacao` JOIN categoria JOIN conta WHERE categoria_id = :id AND categoria.id = :id AND conta.id = publicacao.conta_id AND conta.cep LIKE :area AND (SELECT count(visualizado) FROM respostas WHERE publicacao_id = publicacao.id AND visualizado = 2) = 0 ORDER BY publicacao.id DESC;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":area", $area);
