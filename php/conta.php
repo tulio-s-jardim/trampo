@@ -43,8 +43,8 @@ class Conta {
         return 1;
     }
 
-    public function setCelular($email) {
-        $this->celular = $email;
+    public function setCelular($celular) {
+        $this->celular = $celular;
         return 1;
     }
 

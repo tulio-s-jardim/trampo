@@ -1,9 +1,34 @@
 <?php
 include_once('php/conta.php');
 
-$conta = new Conta();
+function urlExists($url) {
 
-if(isset($_POST['nome'])) {
+    $handle = curl_init($url);
+    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+
+    $response = curl_exec($handle);
+    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+    if($httpCode >= 200 && $httpCode <= 400) {
+        return true;
+    } else {
+        return false;
+    }
+
+    curl_close($handle);
+}
+
+$conta = new Conta();
+$sem_cep = 0;
+
+session_start();
+
+if (isset($_SESSION)) {
+	session_unset();
+	session_destroy();
+}
+
+if(isset($_POST['botao'])) {
 	$conta->setNome($_POST["nome"]);
 	$conta->setSobrenome($_POST["sobrenome"]);
 	$conta->setEmail($_POST["email"]);
@@ -18,33 +43,37 @@ if(isset($_POST['nome'])) {
 	// set feed URL
 	$url = 'https://api.postmon.com.br/v1/cep/'.$cep.'?format=xml';
 
-	$sxml = simplexml_load_file($url);
+	 if(urlExists($url)){
+	 	$sxml = simplexml_load_file($url);
+	 	if(!is_null($sxml->bairro)){
+	 		$conta->setCep($cep);
+	 	}else{
+	 		$sem_cep = 1;
+	 	}
+	 }else{
+	 	$sem_cep = 1;
+	 }
 
-	if(!is_null($sxml->bairro)) {
-		$conta->setCep($cep);
-	}
-	if ($conta->estaCadastrado($_POST['celular'], $_POST['email'])) {
-		$cadastrado = -2;
-	}else if ($conta->estaCadastradoCelular($_POST['celular'])) {
-		$cadastrado = -1;
-	} else if ($conta->estaCadastradoEmail($_POST['email'])) {
-		$cadastrado = 0;
-	} else {
-		$cadastrado = 1;
-		$conta->insert();
-		$uid = $conta->existe($_POST['email'], sha1($_POST['senha']));
-		if (!is_null($uid)) {
-			$_SESSION["id"] = $uid;
-			header('Location: perfil.php');
-		}
-		header('Location: perfil.php');
-	}
-}
-
-session_start();
-if (isset($_SESSION)) {
-	session_unset();
-	session_destroy();
+	 if($sem_cep != 1){
+		if ($conta->estaCadastrado($celular, $_POST['email'])) {
+			$cadastrado = -2;
+		}else if ($conta->estaCadastradoCelular($celular)) {
+			$cadastrado = -1;
+		} else if ($conta->estaCadastradoEmail($_POST['email'])) {
+			$cadastrado = 0;
+		} else {
+			$cadastrado = 1;
+			$conta->insert();
+			$uid = $conta->existe($_POST['email'], sha1($_POST['senha']));
+			if (!is_null($uid)) {
+		        session_start();
+		        $_SESSION["id"] = $uid;
+		        header("Location: perfil.php");
+			}else{
+				//header('Location: index.php');
+			}
+		} 	
+	 }
 }
 
 ?>
@@ -78,6 +107,14 @@ if (isset($_SESSION)) {
 									</div>
 								</div>
 							</div>
+						<?php }else if($sem_cep == 1){ ?>
+							<div class="col-md-12">
+								<div class="panel">
+									<div class="panel-body fracasso">
+										<p><b>O CEP informado não é válido</b></p>
+									</div>
+								</div>
+							</div>
 						<?php } ?>
 						<div class="form-group">
 							<label>Nome</label>
@@ -103,7 +140,7 @@ if (isset($_SESSION)) {
 							<label>Senha</label>
 							<input class="form-control" name="senha" type="password" value="" required>
 						</div>
-						<button class="btn btn-primary cadastra" type="submit" required>Cadastrar</button>
+						<button name="botao" class="btn btn-primary cadastra" type="submit" required>Cadastrar</button>
 					</form>
 				</div>
 			</div>
